@@ -1,0 +1,12 @@
+package org.choerbli.controller.dto;
+
+/**
+ * The vote of an item in a choerbli.
+ *
+ * @param itemDescription       The item description the vote is for.
+ * @param choerbli              The choerbli to which the vote belongs to.
+ * @param user                  The user to which the vote belongs to.
+ * @param factor                The factor of the vote.
+ */
+public record VoteDto(ItemDescriptionDto itemDescription, ChoerbliDto choerbli, UserDto user, Integer factor) {
+}
