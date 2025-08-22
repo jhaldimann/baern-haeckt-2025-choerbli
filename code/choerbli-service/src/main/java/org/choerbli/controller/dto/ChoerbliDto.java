@@ -15,5 +15,5 @@ import java.util.UUID;
  * @param endDate       The end date of the choerbli.
  * @param state         The state of the choerbli.
  */
-public record ChoerbliDto(UUID id, String name, String description, UserDto organizer, Date startDate, Date endDate, ChoerbliStateDto state, List<UserDto> users, List<ItemDto> items) {
+public record ChoerbliDto(UUID id, String name, String description, UserDto organizer, Date startDate, Date endDate, ChoerbliStateDto state, List<UserDto> users, List<VoteDto> votes, List<ItemDto> items) {
 }

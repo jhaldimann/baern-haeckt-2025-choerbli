@@ -1,5 +1,7 @@
 package org.choerbli.controller.dto;
 
+import java.util.UUID;
+
 /**
  * The vote of an item in a choerbli.
  *
@@ -8,5 +10,5 @@ package org.choerbli.controller.dto;
  * @param user                  The user to which the vote belongs to.
  * @param factor                The factor of the vote.
  */
-public record VoteDto(ItemDescriptionDto itemDescription, ChoerbliDto choerbli, UserDto user, Integer factor) {
+public record VoteDto(UUID id, ItemDescriptionDto itemDescription, ChoerbliDto choerbli, UserDto user, Integer factor) {
 }
