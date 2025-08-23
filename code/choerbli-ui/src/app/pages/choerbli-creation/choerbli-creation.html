@@ -69,7 +69,7 @@
           </div>
           <div class="flex pt-6 justify-between">
             <p-button (onClick)="activateCallback(1)" label="Zurück" severity="secondary" icon="pi pi-arrow-left" />
-            <p-button (onClick)="activateCallback(3)" label="Erstellen" icon="pi pi-arrow-right" iconPos="right" />
+            <p-button (onClick)="createChoerbli()" [loading]="store.isLoading()" label="Erstellen" icon="pi pi-arrow-right" iconPos="right" />
           </div>
         </ng-template>
       </p-step-panel>
