@@ -16,9 +16,10 @@
           <img class="category-icon" src="/assets/{{category | lowercase}}.png" alt="">
           {{ category }}
         </h2>
-        @for (item of itemList; track item.category) {
-          @if (item && item.category.name == category) {
-            <app-item name="{{item.name}}" itemId="{{item.id}}"></app-item>
+        @for (item of itemList; track item.item.category) {
+          @if (item && item.item.category.name == category) {
+            {{item.vote}}
+            <app-item (somethingHappened)="onChildEvent()" vote="{{item.vote}}" name="{{item.item.name}}" itemId="{{item.item.id}}"></app-item>
             <br>
           }
         }
