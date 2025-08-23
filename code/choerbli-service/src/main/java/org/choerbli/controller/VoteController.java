@@ -32,7 +32,7 @@ public class VoteController {
         return ResponseEntity.ok(vote);
     }
 
-    @GetMapping("/vote-info/{userid}")
+    @GetMapping("/vote-info/{userId}")
     public ResponseEntity<UserVoteInfoDto> getUserVoteInfo(@PathVariable(name = "userId") UUID userId) {
         final UserVoteInfoDto userVoteInfo = this.serviceFacade.getUserVoteInfo(userId);
 

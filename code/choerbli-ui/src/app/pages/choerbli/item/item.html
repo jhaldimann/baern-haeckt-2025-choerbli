@@ -6,15 +6,14 @@
   <div class="item-title">
     {{name()}}
   </div>
-
   <div class="up-vote-button">
-    <button>
+    <button type="button" (click)="upVote()" [ngClass]="{'disabled': vote() === '1'}" >
       <i class="pi pi-arrow-up"></i>
     </button>
   </div>
 
   <div class="down-vote-button">
-    <button>
+    <button type="button" (click)="downVote()" [ngClass]="{'disabled': vote() === '-1'}" >
       <i class="pi pi-arrow-down"></i>
     </button>
   </div>
