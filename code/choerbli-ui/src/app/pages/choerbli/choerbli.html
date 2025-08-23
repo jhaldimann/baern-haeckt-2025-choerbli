@@ -8,7 +8,7 @@
       </h2>
       @for (item of itemList; track item.category) {
         @if(item && item.category.name == category) {
-          <app-item name="{{item.name}}"></app-item>
+          <app-item choerbliId="{{id}}" itemId="{{item.id}}" name="{{item.name}}"></app-item>
           <br>
         }
       }

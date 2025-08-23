@@ -1,5 +1,7 @@
-import {Component, input} from '@angular/core';
-import {Input} from 'postcss';
+import {Component, inject, input} from '@angular/core';
+import {VoteApiService} from '../../../shared/services/vote-api.service';
+import {LocalStorageService} from '../../../shared/services/local-storage.service';
+import {take} from 'rxjs';
 
 @Component({
   selector: 'app-item',
@@ -9,4 +11,21 @@ import {Input} from 'postcss';
 })
 export class Item {
   name = input('');
+  itemId = input('');
+  choerbliId = input('');
+  voteApiService: VoteApiService = inject(VoteApiService);
+  storageService: LocalStorageService = inject(LocalStorageService);
+
+  downVote(): void {
+    const user: any = localStorage.getItem('USER');
+    console.log(JSON.parse(user).name)
+    const choerbliId = this.choerbliId;
+    this.voteApiService.createVote(user, choerbliId(), this.itemId(),-1).pipe(take(1)).subscribe();
+  }
+
+  upVote(): void {
+    const user = localStorage.getItem('USER');
+    const choerbliId = this.choerbliId;
+    this.voteApiService.createVote(user, choerbliId(), this.itemId(),1).pipe(take(1)).subscribe();
+  }
 }

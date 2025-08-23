@@ -33,7 +33,9 @@
     top: 2px;
     text-align: center;
     button {
+      cursor: pointer;
       height: 100%;
+      width: 45px;
       i {
         color: #500404;
         font-size: 20px;
@@ -53,9 +55,10 @@
     top: 2px;
     text-align: center;
     button {
+      cursor: pointer;
       height: 100%;
+      width: 45px;
       i {
-
         vertical-align: top;
         color: #500404;
         font-size: 20px;
