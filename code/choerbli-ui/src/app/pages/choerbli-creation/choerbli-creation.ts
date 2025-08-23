@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, effect, inject} from '@angular/core';
 import {Step, StepList, StepPanel, StepPanels, Stepper} from 'primeng/stepper';
 import {NgClass} from '@angular/common';
 import {Button, ButtonDirective} from 'primeng/button';
@@ -11,6 +11,9 @@ import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {InputText} from 'primeng/inputtext';
 import {LottieAnimation} from '../../shared/components/lottie-animation/lottie-animation';
 import {UserStore} from '../../shared/stores/user-store';
+import {ChoerbliStore} from '../../shared/stores/choerbli-store';
+import {Choerbli} from '../../shared/models/choerbli.model';
+import {toObservable} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-choerbli-creation',
@@ -37,6 +40,7 @@ import {UserStore} from '../../shared/stores/user-store';
 })
 export class ChoerbliCreation {
   constructor() {}
+  choerbli: Choerbli = {description: '', endDate: new Date(), name: '', startDate: new Date()};
   activeStep: number = 1;
   choerbliId: string = 'randomUUID12356';
   private router: Router = inject(Router);
@@ -45,6 +49,7 @@ export class ChoerbliCreation {
     { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
     { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
   ];
+  readonly store = inject(ChoerbliStore);
   get link(): string{
     const baseURL = 'http://localhost:4200/';
     return baseURL+'choerbli/'+this.choerbliId
@@ -56,5 +61,10 @@ export class ChoerbliCreation {
 
   copyLinkToClipboard(): void {
     navigator.clipboard.writeText(this.link);
+  }
+
+  createChoerbli() {
+    this.store.createChoerbli(this.choerbli);
+    this.activeStep = 3;
   }
 }
