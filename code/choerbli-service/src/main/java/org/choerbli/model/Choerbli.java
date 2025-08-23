@@ -28,4 +28,6 @@ public class Choerbli {
     private Set<Item> items;
     @OneToMany(mappedBy = "choerbli")
     private Set<Vote> votes;
+    @OneToMany(mappedBy = "choerbli")
+    private Set<Consequence> consequences;
 }

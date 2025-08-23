@@ -6,5 +6,6 @@ import org.choerbli.controller.dto.UserDto;
 import java.util.Date;
 import java.util.UUID;
 
-public record ChoerbliUpdateDto(UUID id, @Nullable UserDto organizer, @Nullable String name, @Nullable String description, @Nullable Date startDate, @Nullable Date endDate) {
+public record ChoerbliUpdateDto(UUID id, @Nullable UserDto organizer, @Nullable String name,
+                                @Nullable String description, @Nullable Date startDate, @Nullable Date endDate) {
 }

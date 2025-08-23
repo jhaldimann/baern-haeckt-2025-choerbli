@@ -33,7 +33,7 @@ public class ChoerbliController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<ChoerbliDto> update(@RequestPart(name = "updateDto")ChoerbliUpdateDto updateDto) {
+    public ResponseEntity<ChoerbliDto> update(@RequestPart(name = "updateDto") ChoerbliUpdateDto updateDto) {
         final ChoerbliDto choerbli = this.serviceFacade.updateChoerbli(updateDto);
 
         return ResponseEntity.ok(choerbli);
