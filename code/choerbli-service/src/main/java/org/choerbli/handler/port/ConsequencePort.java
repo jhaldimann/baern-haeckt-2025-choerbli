@@ -7,5 +7,5 @@ import org.choerbli.controller.dto.request.ConsequencesCreationDto;
 import java.util.List;
 
 public interface ConsequencePort {
-    List<ConsequenceDto> create(final ConsequencesCreationDto creationDtos);
+    List<ConsequenceDto> create(final List<ConsequenceDto> creationDtos);
 }

@@ -1,4 +1,4 @@
-<p-menubar [model]="items" class="m-8">
+<p-menubar class="m-8">
   <ng-template #start>
     <a routerLink="/" class="flex items-center gap-2">
     <img ngSrc="/assets/choerbli-transparent.png" alt="logo" height="32" width="32">
@@ -6,9 +6,11 @@
     </a>
   </ng-template>
   <ng-template #end>
-    <div class="flex items-center gap-2">
-      <input type="text" pInputText placeholder="Search" class="w-36"/>
-      <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"/>
-    </div>
+    @if (userStore.user().id) {
+      <div class="flex items-center gap-2">
+        <span>{{userStore.user().name}}</span>
+        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"/>
+      </div>
+    }
   </ng-template>
 </p-menubar>

@@ -1,5 +1,5 @@
 <h1 class="mb-4">Chörbli - {{ choerbliStore.choerbli().name }}</h1>
-@if (!userStore.user()?.id) {
+@if (!userStore.user().id) {
   <div>
     <p-card class="flex flex-col gap-2 mx-auto basis-[40rem] w-200">
       <app-user-form [user]="user"></app-user-form>
@@ -32,7 +32,7 @@
   <span>yay finito</span>
 }
 
-@if (choerbliStore.choerbli().state !== ChoerbliStatus.DONE) {
+@if (choerbliStore.choerbli().state !== ChoerbliStatus.DONE && userStore.user().id) {
   <div class="flex m-4 mr-104 mt-0 justify-end">
     <p-button (onClick)="nextPhase()" label="Nächste Phase" icon="pi pi-arrow-right" iconPos="right"/>
   </div>

@@ -19,7 +19,7 @@ public class ConsequenceController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<List<ConsequenceDto>> create(@RequestPart(name = "creationDtos") ConsequencesCreationDto creationDtos) {
+    public ResponseEntity<List<ConsequenceDto>> create(@RequestPart(name = "creationDtos") List<ConsequenceDto> creationDtos) {
         final List<ConsequenceDto> consequences = this.serviceFacade.createConsequences(creationDtos);
 
         return ResponseEntity.ok(consequences);

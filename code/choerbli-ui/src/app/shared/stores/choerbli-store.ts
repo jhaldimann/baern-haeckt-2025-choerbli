@@ -17,7 +17,8 @@ const initialState: ChoerbliState = {
     id: "",
     votes: [],
     items: [],
-    state: undefined
+    state: undefined,
+    consequences: []
   },
   isLoading: false,
 };
@@ -52,7 +53,7 @@ export function withChoerbliMethods() {
                 patchState(store, {choerbli: response})
               }
             )
-          }
+          },
         }
       )
     ))

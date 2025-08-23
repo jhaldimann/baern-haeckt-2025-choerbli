@@ -1,1 +1,11 @@
-<p>assigning-form works!</p>
+<div>{{choerbliStore.choerbli()|json}}</div>
+<p-accordion value="0">
+  @for (categroy of choerbliStore.choerbli().items; track categroy) {
+    <p-accordion-panel value="0">
+      <p-accordion-header>categroy</p-accordion-header>
+      <p-accordion-content>
+        <div></div>
+      </p-accordion-content>
+    </p-accordion-panel>
+  }
+</p-accordion>
