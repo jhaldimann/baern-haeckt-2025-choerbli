@@ -10,7 +10,13 @@ import org.choerbli.controller.dto.request.VoteUpdateDto;
 import org.choerbli.handler.port.VotePort;
 import org.choerbli.mapper.ItemCategoryMapper;
 import org.choerbli.mapper.VoteMapper;
+import org.choerbli.model.Choerbli;
+import org.choerbli.model.ItemDescription;
+import org.choerbli.model.User;
 import org.choerbli.model.Vote;
+import org.choerbli.repository.ChoerbliRepository;
+import org.choerbli.repository.ItemDescriptionRepository;
+import org.choerbli.repository.UserRepository;
 import org.choerbli.repository.VoteRepository;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +27,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 class VoteImpl implements VotePort {
     private final VoteRepository voteRepository;
+    private final ChoerbliRepository choerbliRepository;
+    private final UserRepository userRepository;
+    private final ItemDescriptionRepository itemDescriptionRepository;
     private final VoteMapper voteMapper;
     private final ItemCategoryMapper itemCategoryMapper;
 
     @Override
     public VoteDto create(VoteCreationDto creationDto) {
         final Vote vote = this.voteMapper.toVote(creationDto);
+
+        final Choerbli choerbli = this.choerbliRepository.findById(creationDto.choerbliId()).orElseThrow(() -> new EntityNotFoundException("The choerbli with ID %s was not found.".formatted(creationDto.choerbliId())));
+        final User user = this.userRepository.findById(creationDto.userId()).orElseThrow(() -> new EntityNotFoundException("The user with ID %s was not found.".formatted(creationDto.userId())));
+        final ItemDescription itemDescription = this.itemDescriptionRepository.findById(creationDto.itemDescriptionId()).orElseThrow(() -> new EntityNotFoundException("The item description with ID %s was not found.".formatted(creationDto.itemDescriptionId())));
+
+        vote.setChoerbli(choerbli);
+        vote.setUser(user);
+        vote.setItemDescription(itemDescription);
 
         this.voteRepository.save(vote);
 

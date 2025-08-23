@@ -1,4 +1,6 @@
 package org.choerbli.controller.dto;
 
-public record UserSummaryDto(UserDto user, int rank, double amountPaid, double amountDue) {
+import jakarta.annotation.Nullable;
+
+public record UserSummaryDto(UserDto user, int rank, double amountPaid, double amountDue, @Nullable ConsequenceDto consequence) {
 }
