@@ -14,6 +14,9 @@ import {UserStore} from '../../shared/stores/user-store';
 import {ChoerbliStore} from '../../shared/stores/choerbli-store';
 import {Choerbli} from '../../shared/models/choerbli.model';
 import {User} from '../../shared/models/user.model';
+import {Consequence} from '../../shared/models/consequence.model';
+import {ConsequenceStep} from '../../shared/components/consequence-step/consequence-step';
+import {ConsequenceApiService} from '../../shared/services/consequence-api.service';
 
 @Component({
   selector: 'app-choerbli-creation',
@@ -32,30 +35,37 @@ import {User} from '../../shared/models/user.model';
     InputGroupAddon,
     InputText,
     ButtonDirective,
-    LottieAnimation
+    LottieAnimation,
+    ConsequenceStep
   ],
   providers: [UserStore],
   templateUrl: './choerbli-creation.html',
   styleUrl: './choerbli-creation.scss'
 })
 export class ChoerbliCreation {
-  constructor() {}
+
   choerbli: Choerbli = {
+    consequences: [],
     state: undefined,
-    items: [], votes: [], id: '', description: '', endDate: new Date(), name: '', startDate: new Date()};
+    items: [], votes: [], id: '', description: '', endDate: new Date(), name: '', startDate: new Date()
+  };
   user: User = {email: '', id: '', name: '', choerbliId: ''};
   activeStep: number = 1;
+  punishments: Consequence[] = [];
+  rewards: Consequence[] = [];
   private router: Router = inject(Router);
   members = [
-    { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
-    { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
-    { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
+    {name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner'},
+    {name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor'},
+    {name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer'}
   ];
   readonly choerbliStore = inject(ChoerbliStore);
   readonly userStore = inject(UserStore);
-  get link(): string{
+  readonly consequenceApiService = inject(ConsequenceApiService);
+
+  get link(): string {
     const baseURL = 'http://localhost:4200/';
-    return baseURL+'choerbli/'+this.choerbliStore.choerbli()?.id
+    return baseURL + 'choerbli/' + this.choerbliStore.choerbli()?.id
   }
 
   navigateToChoerbli(): void {
@@ -71,9 +81,15 @@ export class ChoerbliCreation {
     this.activeStep = 2;
   }
 
+  createConsequences() {
+    const consequences = [...this.rewards,...this.punishments];
+    this.consequenceApiService.createConsequences(consequences).subscribe();
+    this.activeStep = 3;
+  }
+
   createUser() {
     this.user.choerbliId = this.choerbliStore.choerbli()?.id ?? '';
     this.userStore.createUser(this.user);
-    this.activeStep = 3;
+    this.activeStep = 4;
   }
 }

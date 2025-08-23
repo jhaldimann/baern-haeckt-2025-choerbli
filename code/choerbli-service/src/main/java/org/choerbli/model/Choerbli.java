@@ -23,11 +23,4 @@ public class Choerbli {
     private String description;
     private Date startDate;
     private Date endDate;
-
-    @OneToMany(mappedBy = "choerbli")
-    private Set<Item> items;
-    @OneToMany(mappedBy = "choerbli")
-    private Set<Vote> votes;
-    @OneToMany(mappedBy = "choerbli")
-    private Set<Consequence> consequences;
 }

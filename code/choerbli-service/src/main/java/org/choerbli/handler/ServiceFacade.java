@@ -81,7 +81,7 @@ public class ServiceFacade {
         return this.choerbliPort.getSummary(choerbliId);
     }
 
-    public ConsequenceDto createConsequence(ConsequenceCreationDto creationDto) {
-        return this.consequencePort.create(creationDto);
+    public List<ConsequenceDto> createConsequences(List<ConsequenceDto> creationDtos) {
+        return this.consequencePort.create(creationDtos);
     }
 }

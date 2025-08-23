@@ -9,14 +9,9 @@ import org.choerbli.controller.dto.request.ChoerbliCreationDto;
 import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
 import org.choerbli.controller.dto.request.ConsequenceCreationDto;
 import org.choerbli.handler.port.ChoerbliPort;
-import org.choerbli.mapper.ChoerbliMapper;
-import org.choerbli.mapper.ConsequenceMapper;
-import org.choerbli.mapper.UserMapper;
+import org.choerbli.mapper.*;
 import org.choerbli.model.*;
-import org.choerbli.repository.ChoerbliRepository;
-import org.choerbli.repository.ConsequencesRepository;
-import org.choerbli.repository.ItemRepository;
-import org.choerbli.repository.UserRepository;
+import org.choerbli.repository.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -30,9 +25,12 @@ class ChoerbliImpl implements ChoerbliPort {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final ConsequencesRepository consequencesRepository;
+    private final VoteRepository voteRepository;
     private final ChoerbliMapper choerbliMapper;
     private final UserMapper userMapper;
+    private final ItemMapper itemMapper;
     private final ConsequenceMapper consequenceMapper;
+    private final VoteMapper voteMapper;
 
     @Override
     public ChoerbliDto getById(UUID id) {
@@ -97,19 +95,15 @@ class ChoerbliImpl implements ChoerbliPort {
             throw new EntityNotFoundException("The user with ID %s was not found.");
         }
 
-        final Optional<Item> item = choerbli.get().getItems().stream().filter(i -> i.getId().equals(itemId)).findFirst();
+        final Item item = this.itemRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("The item with ID %s was not found.".formatted(itemId)));
 
-        if (item.isEmpty()) {
-            throw new EntityNotFoundException("The item with ID %s was not found.".formatted(itemId));
+        if (item.getChoerbli().getId() != choerbli.get().getId()) {
+            throw new BadRequestException("The item choerbli ID %s does not match the choerbli ID %s.".formatted(item.getChoerbli().getId(), choerbli.get().getId()));
         }
 
-        if (item.get().getChoerbli().getId() != choerbli.get().getId()) {
-            throw new BadRequestException("The item choerbli ID %s does not match the choerbli ID %s.".formatted(item.get().getChoerbli().getId(), choerbli.get().getId()));
-        }
+        item.setUser(user.get());
 
-        item.get().setUser(user.get());
-
-        this.itemRepository.save(item.get());
+        this.itemRepository.save(item);
 
         return this.choerbliMapper.toChoerbliDto(choerbli.get());
     }
@@ -124,9 +118,7 @@ class ChoerbliImpl implements ChoerbliPort {
 
         choerbli.get().setState(ChoerbliStateDto.ASSIGNING.getState());
 
-        final Map<ItemDescription, Integer> itemVotes = choerbli
-                .map(Choerbli::getVotes)
-                .orElse(Collections.emptySet())
+        final Map<ItemDescription, Integer> itemVotes = this.voteRepository.findByChoerbliId(choerbli.get().getId())
                 .stream()
                 .collect(Collectors.groupingBy(
                         Vote::getItemDescription,
@@ -166,7 +158,9 @@ class ChoerbliImpl implements ChoerbliPort {
 
         choerbli.get().setState(ChoerbliStateDto.DONE.getState());
 
-        for (Item item : choerbli.get().getItems()) {
+        final List<Item> items = this.itemRepository.findAllByChoerbliId(choerbli.get().getId());
+
+        for (Item item : items) {
             User user = item.getUser();
 
             if (user == null) {
@@ -193,11 +187,12 @@ class ChoerbliImpl implements ChoerbliPort {
     public ChoerbliSummaryDto getSummary(UUID id) {
         final Choerbli choerbli = this.choerbliRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The choerbli with ID %s was not found.".formatted(id)));
 
-        final List<Item> items = this.itemRepository.findAllByChoerbliId(choerbli.getId());
+        final List<ItemDto> items = this.itemRepository.findAllByChoerbliId(choerbli.getId()).stream().map(this.itemMapper::toItemDto).toList();
 
-        final Map<ConsequenceTypeDto, List<ConsequenceDto>> consequences = this.consequencesRepository.findAllByChoerbliId(choerbli.getId())
+        final List<ConsequenceDto> consequenceDtos = this.consequencesRepository.findAllByChoerbliId(choerbli.getId()).stream().map(this.consequenceMapper::toConsequenceDto).toList();
+
+        final Map<ConsequenceTypeDto, List<ConsequenceDto>> consequences = consequenceDtos
                 .stream()
-                .map(this.consequenceMapper::toConsequenceDto)
                 .collect(Collectors.groupingBy(
                         ConsequenceDto::type,
                         Collectors.collectingAndThen(
@@ -206,7 +201,7 @@ class ChoerbliImpl implements ChoerbliPort {
                                         .sorted(Comparator.comparingInt(ConsequenceDto::orderOfApplication))
                                         .toList())));
 
-        final double totalAmount = items.stream().mapToDouble(Item::getPrice).sum();
+        final double totalAmount = items.stream().mapToDouble(ItemDto::price).sum();
 
         final List<UserDto> rankedUsers = this.userRepository.findAllByChoerbliId(choerbli.getId())
                 .stream()
@@ -240,8 +235,8 @@ class ChoerbliImpl implements ChoerbliPort {
                     }
 
                     final double amountPaid = items.stream()
-                            .filter(i -> i.getUser().getId().equals(user.id()))
-                            .mapToDouble(Item::getPrice)
+                            .filter(i -> i.user() != null && i.user().id().equals(user.id()))
+                            .mapToDouble(ItemDto::price)
                             .sum();
 
                     final double amountDue = (totalAmount / userCount) - amountPaid;
@@ -250,6 +245,8 @@ class ChoerbliImpl implements ChoerbliPort {
                 })
                 .toList();
 
-        return new ChoerbliSummaryDto(choerbli, userSummaries);
+        final List<VoteDto> votes = this.voteRepository.findByChoerbliId(choerbli.getId()).stream().map(this.voteMapper::toVoteDto).toList();
+
+        return new ChoerbliSummaryDto(choerbli, userSummaries, votes, items, consequenceDtos);
     }
 }

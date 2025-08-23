@@ -1,0 +1,28 @@
+<div>
+  <h3 class="font-bold text-md">{{ title }}</h3>
+
+  <div class="mb-8">
+      <p-inputgroup>
+        <input pInputText  [(ngModel)]="description" class="w-[25rem]"/>
+        <p-inputgroup-addon>
+          <p-button class="h-full" (click)="addItem()">
+            <i class="pi pi-plus"></i>
+          </p-button>
+        </p-inputgroup-addon>
+      </p-inputgroup>
+  </div>
+
+  @for (consequence of sortedConsequences; track consequence.orderOfApplication) {
+    <div class="flex flex-wrap align-center gap-4 mb-4 align-center">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <p>{{consequence.orderOfApplication}}.</p>
+        </p-inputgroup-addon>
+        <input pInputText id="in_label" [(ngModel)]="consequence.description" autocomplete="off"/>
+        <p-button class="h-full" (click)="removeItem(consequence)">
+          <i class="pi pi-minus"></i>
+        </p-button>
+      </p-inputgroup>
+    </div>
+  }
+</div>
