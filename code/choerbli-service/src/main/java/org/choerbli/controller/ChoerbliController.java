@@ -1,6 +1,7 @@
 package org.choerbli.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.choerbli.controller.dto.ChoerbliSummaryDto;
 import org.choerbli.controller.dto.request.ChoerbliCreationDto;
 import org.choerbli.controller.dto.ChoerbliDto;
 import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
@@ -57,5 +58,12 @@ public class ChoerbliController {
         final ChoerbliDto choerbli = this.serviceFacade.finishChoerbli(choerbliId);
 
         return ResponseEntity.ok(choerbli);
+    }
+
+    @GetMapping("/summary/{choerbliId}")
+    public ResponseEntity<ChoerbliSummaryDto> getSummary(@PathVariable(name = "choerbliId") UUID choerbliId) {
+        final ChoerbliSummaryDto summary = this.serviceFacade.getChoerbliSummary(choerbliId);
+
+        return ResponseEntity.ok(summary);
     }
 }

@@ -1,6 +1,7 @@
 package org.choerbli.handler.port;
 
 import org.choerbli.controller.dto.ChoerbliDto;
+import org.choerbli.controller.dto.ChoerbliSummaryDto;
 import org.choerbli.controller.dto.request.ChoerbliCreationDto;
 import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
 
@@ -20,4 +21,6 @@ public interface ChoerbliPort {
     ChoerbliDto changeToAssigning(UUID id);
 
     ChoerbliDto finish(UUID id);
+
+    ChoerbliSummaryDto getSummary(UUID id);
 }
