@@ -11,4 +11,5 @@ import java.util.UUID;
  * @param factor                The factor of the vote.
  */
 public record VoteDto(UUID id, ItemDescriptionDto itemDescription, ChoerbliDto choerbli, UserDto user, Integer factor) {
+    public static final Integer DEFAULT_VOTES_PER_CATEGORY = 3;
 }
