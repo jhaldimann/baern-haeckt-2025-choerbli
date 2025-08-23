@@ -68,5 +68,9 @@
 }
 
 .disabled {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.44) !important;
+  border-color: rgba(0, 0, 0, 0.50) !important;
+  i {
+    color: rgba(0, 0, 0, 0.33) !important;
+  }
 }

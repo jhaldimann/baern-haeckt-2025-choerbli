@@ -1,8 +1,9 @@
-import {Component, EventEmitter, inject, input, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, input, InputSignal, numberAttribute, Output} from '@angular/core';
 import {VoteApiService} from '../../../shared/services/vote-api.service';
 import {LocalStorageService} from '../../../shared/services/local-storage.service';
 import {take} from 'rxjs';
 import {NgClass} from '@angular/common';
+import {Vote} from '../../../shared/models/vote.model';
 
 @Component({
   selector: 'app-item',
@@ -17,27 +18,39 @@ export class Item {
   name = input('');
   itemId = input('');
   choerbliId = input('');
-  vote = input('');
+  @Input() voteId!: string | undefined;
+  @Input({transform: numberAttribute}) voteFactor!: number | undefined;
   voteApiService: VoteApiService = inject(VoteApiService);
-  storageService: LocalStorageService = inject(LocalStorageService);
 
-  downVote(): void {
+  downVote(voteId: string | undefined): void {
     const user: any = localStorage.getItem('USER');
     const username = JSON.parse(user).id;
     const choerbliId = JSON.parse(user).choerbli.id;
-    this.voteApiService.createVote(username, choerbliId, this.itemId(),-1).pipe(take(1)).subscribe(d => {
-      this.somethingHappened.emit();
-    });
+    if(voteId) {
+      this.voteApiService.updateVote(voteId, -1).pipe(take(1)).subscribe(d => {
+        this.somethingHappened.emit();
+      });
+    } else {
+      this.voteApiService.createVote(username, choerbliId, this.itemId(),-1).pipe(take(1)).subscribe(d => {
+        this.somethingHappened.emit();
+      });
+    }
+
 
   }
 
-  upVote(): void {
+  upVote(voteId: string | undefined): void {
     const user: any = localStorage.getItem('USER');
     const username = JSON.parse(user).id;
     const choerbliId = JSON.parse(user).choerbli.id;
-
-    this.voteApiService.createVote(username, choerbliId, this.itemId(),1).pipe(take(1)).subscribe(d => {
-      this.somethingHappened.emit();
-    });
+    if(voteId) {
+      this.voteApiService.updateVote(voteId, 1).pipe(take(1)).subscribe(d => {
+        this.somethingHappened.emit();
+      });
+    } else {
+      this.voteApiService.createVote(username, choerbliId, this.itemId(),1).pipe(take(1)).subscribe(d => {
+        this.somethingHappened.emit();
+      });
+    }
   }
 }
