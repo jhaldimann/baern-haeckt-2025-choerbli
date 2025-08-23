@@ -5,12 +5,20 @@ import {ChoerbliApiService} from '../services/choerbli-api.service';
 import {finalize} from 'rxjs';
 
 type ChoerbliState = {
-  choerbli: Choerbli | undefined;
+  choerbli: Choerbli;
   isLoading: boolean;
 };
-
 const initialState: ChoerbliState = {
-  choerbli: undefined,
+  choerbli: {
+    name: "",
+    description: "",
+    startDate: undefined,
+    endDate: undefined,
+    id: "",
+    votes: [],
+    items: [],
+    state: undefined
+  },
   isLoading: false,
 };
 
@@ -23,13 +31,18 @@ export const ChoerbliStore = signalStore(
 export function withChoerbliMethods() {
   return signalStoreFeature(
     withMethods((store, choerbliApiService = inject(ChoerbliApiService)) => ({
-          loadChoerbli(id: string) {
-            const choerbli: Choerbli = {
-              items: [], votes: [],
-              id: '',
-              description: '', endDate: new Date(), name: '', startDate: new Date()
-            };
-            patchState(store, {...choerbli});
+          setChoerbliId(id: string) {
+            patchState(store, {choerbli: {id: id}});
+          },
+        loadChoerbliById(id: string) {
+            patchState(store, {isLoading: true})
+            choerbliApiService.getChoerbli(id).pipe(
+            finalize(() => patchState(store, {isLoading: false})),
+          ).subscribe((response: Choerbli) => {
+              patchState(store, {choerbli: response})
+            }
+          )
+            patchState(store, {choerbli: {id: id}});
           },
           createChoerbli(choerbli: Choerbli): void {
             patchState(store, {isLoading: true})

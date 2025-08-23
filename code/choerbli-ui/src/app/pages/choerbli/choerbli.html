@@ -1,18 +1,33 @@
-<h1 class="title">Chörbli - {{id}}</h1>
-@if ((items | async); as itemList) {
-  <div class="content-page" >
-    @for (category of getAllItemCategories(itemList); track category) {
-      <h2>
-        <img class="category-icon" src="/assets/{{category | lowercase}}.png">
-        {{category}}
-      </h2>
-      @for (item of itemList; track item.category) {
-        @if(item && item.category.name == category) {
-          <app-item name="{{item.name}}"></app-item>
-          <br>
-        }
-      }
-      <br>
-    }
+<h1 class="mb-4">Chörbli - {{ choerbliStore.choerbli().name }}</h1>
+@if (!userStore.user()?.id) {
+  <div>
+    <p-card class="flex flex-col gap-2 mx-auto basis-[40rem] w-200">
+      <app-user-form [user]="user"></app-user-form>
+      <div class="flex pt-6 justify-end">
+        <p-button (onClick)="createUser()" label="User erstellen" icon="pi pi-arrow-right" iconPos="right"/>
+      </div>
+    </p-card>
   </div>
+} @else if (choerbliStore.choerbli().state === ChoerbliStatus.VOTING) {
+  @if ((items | async); as itemList) {
+    <div class="content-page">
+      @for (category of getAllItemCategories(itemList); track category) {
+        <h2>
+          <img class="category-icon" src="/assets/{{category | lowercase}}.png">
+          {{ category }}
+        </h2>
+        @for (item of itemList; track item.category) {
+          @if (item && item.category.name == category) {
+            <app-item name="{{item.name}}"></app-item>
+            <br>
+          }
+        }
+        <br>
+      }
+    </div>
+  }
+} @else if (choerbliStore.choerbli().state === ChoerbliStatus.ASSIGNING) {
+  <app-assigning-form></app-assigning-form>
+} @else if (choerbliStore.choerbli().state === ChoerbliStatus.DONE) {
+  <span>yay finito</span>
 }

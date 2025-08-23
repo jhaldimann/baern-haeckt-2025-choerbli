@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {Choerbli} from '../models/choerbli.model';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -14,5 +14,9 @@ export class ChoerbliApiService {
     const formData = new FormData();
     formData.append('creationDto', new Blob([JSON.stringify(choerbli)], { type: 'application/json' }));
     return this.http.post<Choerbli>(this.baseUrl+'/api/choerbli/create', formData);
+  }
+
+  getChoerbli(id: string) {
+    return this.http.get<Choerbli>(this.baseUrl+'/api/choerbli/'+id);
   }
 }
