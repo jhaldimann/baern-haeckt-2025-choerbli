@@ -16,5 +16,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Transactional(readOnly = true)
     List<User> findAllById(Iterable<UUID> uuids);
 
-    List<User> findAllByChoerbli(final Choerbli choerbli);
+    List<User> findAllByChoerbliId(UUID choerbliId);
 }

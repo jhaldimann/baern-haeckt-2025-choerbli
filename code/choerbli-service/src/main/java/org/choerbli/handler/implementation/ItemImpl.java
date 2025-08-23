@@ -6,9 +6,12 @@ import org.choerbli.controller.dto.ItemDto;
 import org.choerbli.handler.port.ItemPort;
 import org.choerbli.mapper.ItemMapper;
 import org.choerbli.model.Item;
+import org.choerbli.model.User;
 import org.choerbli.repository.ItemRepository;
+import org.choerbli.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,25 +19,39 @@ import java.util.UUID;
 @RequiredArgsConstructor
 class ItemImpl implements ItemPort {
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
     private final ItemMapper itemMapper;
 
     @Override
     public ItemDto assign(UUID id, UUID userId) {
-        throw new UnsupportedOperationException();
+        final Item item = this.itemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The item with ID %s was not found.".formatted(id)));
+        final User user = this.userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("The user with ID %s was not found.".formatted(userId)));
+
+        item.setUser(user);
+
+        this.itemRepository.save(item);
+
+        final List<Item> items = this.itemRepository.findAllByChoerbliId(item.getChoerbli().getId());
+
+        final List<Item> unassignedItems = items.stream().filter(i -> i.getUser() == null).toList();
+
+        for (Item unassignedItem : unassignedItems) {
+            unassignedItem.setPoints(unassignedItem.getPoints() + ItemDto.UNASSIGNED_POINT_INCREASE);
+
+            this.itemRepository.save(unassignedItem);
+        }
+
+        return this.itemMapper.toItemDto(item);
     }
 
     @Override
     public ItemDto updatePrice(UUID id, Double price) {
-        final Optional<Item> item = this.itemRepository.findById(id);
+        final Item item = this.itemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The item with ID %s was not found.".formatted(id)));
 
-        if (item.isEmpty()) {
-            throw new EntityNotFoundException("The item with ID %s was not found.".formatted(id));
-        }
+        item.setPrice(price);
 
-        item.get().setPrice(price);
+        this.itemRepository.save(item);
 
-        this.itemRepository.save(item.get());
-
-        return this.itemMapper.toItemDto(item.get());
+        return this.itemMapper.toItemDto(item);
     }
 }

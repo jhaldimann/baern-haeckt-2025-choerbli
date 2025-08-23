@@ -4,9 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.coyote.BadRequestException;
-import org.choerbli.controller.dto.ChoerbliDto;
-import org.choerbli.controller.dto.ChoerbliStateDto;
-import org.choerbli.controller.dto.ItemDto;
+import org.choerbli.controller.dto.*;
 import org.choerbli.controller.dto.request.ChoerbliCreationDto;
 import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
 import org.choerbli.handler.port.ChoerbliPort;
@@ -20,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 @RequiredArgsConstructor
@@ -168,7 +167,7 @@ class ChoerbliImpl implements ChoerbliPort {
             if (user == null) {
                 item.setPoints(ItemDto.DEFAULT_POINTS);
 
-                final List<User> users = this.userRepository.findAllByChoerbli(choerbli.get());
+                final List<User> users = this.userRepository.findAllByChoerbliId(choerbli.get().getId());
 
                 user = users.stream().min(Comparator.comparingInt(User::getPoints)).orElse(null);
 
@@ -183,5 +182,40 @@ class ChoerbliImpl implements ChoerbliPort {
         }
 
         return this.choerbliMapper.toChoerbliDto(choerbli.get());
+    }
+
+    @Override
+    public ChoerbliSummaryDto getSummary(UUID id) {
+        final Choerbli choerbli = this.choerbliRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The choerbli with ID %s was not found.".formatted(id)));
+
+        final List<Item> items = this.itemRepository.findAllByChoerbliId(choerbli.getId());
+
+        final double totalAmount = items.stream().mapToDouble(Item::getPrice).sum();
+
+        final List<UserDto> rankedUsers = this.userRepository.findAllByChoerbliId(choerbli.getId())
+                .stream()
+                .sorted(Comparator.comparingInt(User::getPoints))
+                .map(userMapper::toUserDto)
+                .toList();
+
+        final int userCount = rankedUsers.size();
+
+        List<UserSummaryDto> userSummaries = IntStream.range(0, userCount)
+                .mapToObj(index -> {
+                    UserDto user = rankedUsers.get(index);
+                    final int rank = index + 1;
+
+                    final double amountPaid = items.stream()
+                            .filter(i -> i.getUser().getId().equals(user.id()))
+                            .mapToDouble(Item::getPrice)
+                            .sum();
+
+                    final double amountDue = (totalAmount / userCount) - amountPaid;
+
+                    return new UserSummaryDto(user, rank, amountPaid, amountDue);
+                })
+                .toList();
+
+        return new ChoerbliSummaryDto(choerbli, userSummaries);
     }
 }
