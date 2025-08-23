@@ -21,10 +21,8 @@ Automatisch 1 Woche vor Von wird in die nächste phase gewechselt
 Personen wählen was sie mitbringen, bekommen pünkte furs mitbringen
 Personen können sachen mitbringen und bekommen pünkte dafür wenn mehrheit dafür stimmt
 
-TIMEOUT 3
+DONE 3
 Auto Assign zu low Point personen
-
-CLOSED 4
 Liste mit Ranking nach punkten
 
 Abrechnung mit Twint (Out of scope)
