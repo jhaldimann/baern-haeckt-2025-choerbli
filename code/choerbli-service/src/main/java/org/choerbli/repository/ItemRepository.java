@@ -1,7 +1,7 @@
 package org.choerbli.repository;
 
-import org.choerbli.model.Category;
-import org.choerbli.model.Vote;
+import jakarta.persistence.Entity;
+import org.choerbli.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface VoteRepository extends JpaRepository<Vote, UUID> {
+public interface ItemRepository extends JpaRepository<Item, UUID> {
     @Override
     @Transactional(readOnly = true)
-    List<Vote> findAllById(Iterable<UUID> uuids);
+    List<Item> findAllById(Iterable<UUID> uuids);
 }
