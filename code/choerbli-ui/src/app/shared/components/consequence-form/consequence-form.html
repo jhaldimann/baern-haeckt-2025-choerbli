@@ -1,6 +1,5 @@
 <div>
   <h3 class="font-bold text-md">{{ title }}</h3>
-
   <div class="mb-8">
       <p-inputgroup>
         <input pInputText  [(ngModel)]="description" class="w-[25rem]"/>
@@ -13,7 +12,7 @@
   </div>
 
   @for (consequence of sortedConsequences; track consequence.orderOfApplication) {
-    <div class="flex flex-wrap align-center gap-4 mb-4 align-center">
+    <div class="flex flex-wrap align-center gap-4 mb-4">
       <p-inputgroup>
         <p-inputgroup-addon>
           <p>{{consequence.orderOfApplication}}.</p>

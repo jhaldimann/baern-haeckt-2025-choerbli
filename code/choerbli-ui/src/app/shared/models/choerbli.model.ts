@@ -8,7 +8,12 @@ export enum ChoerbliStatus {
   DONE = 'DONE',
 }
 
-export type item = {
+export type SummaryItem = {
+  user: User;
+  rank: number;
+  consequence: Consequence;
+}
+export type Item = {
   id: string;
   choerbli: Choerbli;
   user: User;
@@ -16,6 +21,13 @@ export type item = {
   price: number;
   itemDescription: ItemDescription;
 }
+
+export type Summary = {
+  choerbli: Choerbli;
+  userSummaries: SummaryItem[]
+  items: Item[],
+}
+
 
 export type Choerbli = {
   name: string;

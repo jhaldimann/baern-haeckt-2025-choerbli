@@ -15,6 +15,7 @@ import {PhaseApiService} from '../../shared/services/phase-api.service';
 import {VoteApiService} from '../../shared/services/vote-api.service';
 import {Vote} from '../../shared/models/vote.model';
 import {ItemDescription} from '../../shared/models/item-description.model';
+import {Ranking} from '../../shared/components/ranking/ranking';
 
 @Component({
   selector: 'app-choerbli',
@@ -25,7 +26,8 @@ import {ItemDescription} from '../../shared/models/item-description.model';
     UserForm,
     Button,
     Card,
-    AssigningForm
+    AssigningForm,
+    Ranking
   ],
   templateUrl: './choerbli.html',
   styleUrl: './choerbli.scss'
