@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity(name = "ITEMDESCRIPTION")
+@Entity(name = "ITEM_DESCRIPTION")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,5 +21,5 @@ public class ItemDescription {
     private UUID id;
     private String name;
     @ManyToOne
-    private Category categoryId;
+    private Category category;
 }

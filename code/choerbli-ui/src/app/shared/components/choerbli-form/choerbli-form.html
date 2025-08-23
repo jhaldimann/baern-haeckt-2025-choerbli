@@ -3,21 +3,21 @@
   <div class="flex flex-col sm:flex-row sm:items-center gap-6">
     <div class="flex-auto">
       <label for="name" class="block font-semibold mb-2">Choerbli Name</label>
-      <input type="text" pInputText id="name" class="w-full"/>
+      <input type="text" pInputText id="name" class="w-full" [(ngModel)]="choerbli.name"/>
     </div>
   </div>
   <div class="flex-auto">
     <label for="description" class="block font-semibold mb-2">Beschreibung</label>
-    <textarea pTextarea id="description" class="w-full" rows="4"></textarea>
+    <textarea pTextarea id="description" class="w-full" rows="4" [(ngModel)]="choerbli.description"></textarea>
   </div>
   <div class="flex flex-col sm:flex-row sm:items-center gap-6">
     <div class="flex-1">
       <label for="from" class="block font-semibold mb-2">Von</label>
-      <p-datepicker inputId="from" class="w-full"/>
+      <p-datepicker inputId="from" class="w-full" [(ngModel)]="choerbli.startDate"/>
     </div>
     <div class="flex-1">
-      <label for="to" class="block font-semibold mb-2">Bis</label>
-      <p-datepicker inputId="to" class="w-full"/>
+      <label for="to" class="block font-semibold mb-2" >Bis</label>
+      <p-datepicker inputId="to" class="w-full" [(ngModel)]="choerbli.endDate"/>
     </div>
   </div>
 </div>

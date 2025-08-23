@@ -1,5 +1,7 @@
 package org.choerbli.controller.dto;
 
+import lombok.AllArgsConstructor;
+
 import java.util.UUID;
 
 /**
