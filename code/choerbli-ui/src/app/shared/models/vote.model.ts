@@ -3,6 +3,7 @@ import {Choerbli} from './choerbli.model';
 import {User} from './user.model';
 
 export type Vote = {
+  id: string,
   user: User,
   choerbli: Choerbli,
   itemDescription: ItemDescription,

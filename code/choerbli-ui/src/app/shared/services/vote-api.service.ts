@@ -27,6 +27,18 @@ export class VoteApiService {
     return this.http.post<Vote>(this.baseUrl+'/api/vote/create', formData);
   }
 
+  updateVote(voteId: string, factor: number) {
+    const dataToSend  = {
+      id: voteId,
+      factor: factor
+    }
+
+    const formData = new FormData();
+    formData.append('updateDto', new Blob([JSON.stringify(dataToSend)], { type: 'application/json' }));
+    return this.http.patch<Vote>(this.baseUrl+'/api/vote/update', formData);
+
+  }
+
   getAllVotesFromOneUser(userId: string): Observable<Vote[]> {
     return this.http
       .get<UserVoteInfo>(`${this.baseUrl}/api/vote/vote-info/${userId}`)
