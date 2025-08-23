@@ -3,13 +3,12 @@ package org.choerbli.handler;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.choerbli.controller.dto.ChoerbliDto;
+import org.choerbli.controller.dto.ItemDto;
 import org.choerbli.controller.dto.UserDto;
 import org.choerbli.controller.dto.VoteDto;
-import org.choerbli.controller.dto.request.ChoerbliCreationDto;
-import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
-import org.choerbli.controller.dto.request.UserCreationDto;
-import org.choerbli.controller.dto.request.VoteCreationDto;
+import org.choerbli.controller.dto.request.*;
 import org.choerbli.handler.port.ChoerbliPort;
+import org.choerbli.handler.port.ItemPort;
 import org.choerbli.handler.port.UserPort;
 import org.choerbli.handler.port.VotePort;
 import org.springframework.stereotype.Component;
@@ -23,6 +22,7 @@ public class ServiceFacade {
     private final ChoerbliPort choerbliPort;
     private final UserPort userPort;
     private final VotePort votePort;
+    private final ItemPort itemPort;
 
     public ChoerbliDto getChoerbliById(final UUID choerbliId) {
         return this.choerbliPort.getById(choerbliId);
@@ -48,7 +48,19 @@ public class ServiceFacade {
         return this.choerbliPort.addUser(choerbliId, userId);
     }
 
+    public ChoerbliDto changeChoerbliToAssigning(final UUID choerbliId) {
+        return this.choerbliPort.changeToAssigning(choerbliId);
+    }
+
+    public ChoerbliDto finishChoerbli(final UUID choerbliId) {
+        return this.choerbliPort.finish(choerbliId);
+    }
+
     public VoteDto createVote(final VoteCreationDto voteDto) {
         return this.votePort.create(voteDto);
+    }
+
+    public ItemDto updateItem(final ItemUpdateDto updateDto) {
+        return this.itemPort.update(updateDto);
     }
 }

@@ -2,15 +2,16 @@ package org.choerbli.controller.dto;
 
 import jakarta.annotation.Nullable;
 
-import java.util.Optional;
+import java.util.UUID;
 
 /**
  * An item in a choerbli.
  *
+ * @param id            The ID of the item.
  * @param choerbli      The choerbli the item belongs to.
  * @param user          The user that the item is assigned to.
  * @param points        The amount of points the item awards.
  * @param price         The price of the item.
  */
-public record ItemDto(ChoerbliDto choerbli, @Nullable UserDto user, Integer points, Double price) {
+public record ItemDto(UUID id, ChoerbliDto choerbli, @Nullable UserDto user, Integer points, Double price) {
 }
