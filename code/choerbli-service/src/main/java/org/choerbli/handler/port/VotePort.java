@@ -12,5 +12,5 @@ public interface VotePort {
 
     VoteDto update(VoteUpdateDto updateDto);
 
-    UserVoteInfoDto getUserVoteInfo(UUID user);
+    UserVoteInfoDto getUserVoteInfo(UUID userId);
 }

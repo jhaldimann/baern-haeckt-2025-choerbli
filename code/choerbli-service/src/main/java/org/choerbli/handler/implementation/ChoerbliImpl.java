@@ -7,7 +7,6 @@ import org.apache.coyote.BadRequestException;
 import org.choerbli.controller.dto.ChoerbliDto;
 import org.choerbli.controller.dto.ChoerbliStateDto;
 import org.choerbli.controller.dto.ItemDto;
-import org.choerbli.controller.dto.UserDto;
 import org.choerbli.controller.dto.request.ChoerbliCreationDto;
 import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
 import org.choerbli.handler.port.ChoerbliPort;
@@ -49,13 +48,6 @@ class ChoerbliImpl implements ChoerbliPort {
         choerbli.setState(ChoerbliStateDto.VOTING.getState());
 
         this.choerbliRepository.save(choerbli);
-
-        final User user = this.userMapper.toUser(creationDto);
-
-        user.setChoerbli(choerbli);
-        user.setPoints(UserDto.DEFAULT_POINTS);
-
-        this.userRepository.save(user);
 
         return this.choerbliMapper.toChoerbliDto(choerbli);
     }
