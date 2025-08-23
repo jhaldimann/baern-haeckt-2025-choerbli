@@ -1,0 +1,135 @@
+<div class="flex flex-col items-center mb-12">
+  <p-stepper [(value)]="activeStep" class="basis-[40rem] w-200">
+    <p-step-list>
+      <p-step [value]="1" class="flex flex-row flex-auto gap-2">
+        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+          <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                    <span
+                      class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                      [ngClass]="{
+                            'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                            'border-surface': value > activeStep
+                        }"
+                    >
+                        <i class="pi pi-user"></i>
+                    </span>
+          </button>
+        </ng-template>
+      </p-step>
+
+      <p-step [value]="2" class="flex flex-row flex-auto gap-2">
+        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+          <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                    <span
+                      class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                      [ngClass]="{
+                            'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                            'border-surface': value > activeStep
+                        }"
+                    >
+                        <i class="pi pi-pen-to-square"></i>
+                    </span>
+          </button>
+        </ng-template>
+      </p-step>
+
+      <p-step [value]="3" class="flex flex-row flex-auto gap-2">
+        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+          <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                    <span
+                      class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                      [ngClass]="{
+                            'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                            'border-surface': value > activeStep
+                        }"
+                    >
+                        <i class="pi pi-link"></i>
+                    </span>
+          </button>
+        </ng-template>
+      </p-step>
+    </p-step-list>
+
+    <p-step-panels>
+      <p-step-panel [value]="1">
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+            <app-user-form></app-user-form>
+          </div>
+          <div class="flex pt-6 justify-end">
+            <p-button (onClick)="activateCallback(2)" label="Weiter" icon="pi pi-arrow-right" iconPos="right" />
+          </div>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="2">
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+            <app-choerbli-form></app-choerbli-form>
+          </div>
+          <div class="flex pt-6 justify-between">
+            <p-button (onClick)="activateCallback(1)" label="Zurück" severity="secondary" icon="pi pi-arrow-left" />
+            <p-button (onClick)="activateCallback(3)" label="Erstellen" icon="pi pi-arrow-right" iconPos="right" />
+          </div>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="3">
+        <ng-template #content let-activateCallback="activateCallback">
+          <div class="flex flex-col gap-2 mx-auto self-center" style="min-height: 16rem; max-width: 24rem">
+            <h2 class="font-bold text-lg">Chörbli Erstellt</h2>
+            <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Teil dis chörbli</span>
+            <div class="flex gap-2">
+            <app-lottie-animation class="background"></app-lottie-animation>
+            <div>
+              <p-inputgroup>
+                <input pInputText [value]="link" readonly class="w-[25rem]" />
+                <p-inputgroup-addon>
+                  <p-button class="h-full" (click)="copyLinkToClipboard()">
+                    <i class="pi pi-copy"></i>
+                  </p-button>
+                </p-inputgroup-addon>
+              </p-inputgroup>
+            </div>
+            <p-button (click)="op.toggle($event)" icon="pi pi-share-alt" label="Teilen" /></div>
+            <p-popover #op>
+              <div class="flex flex-col gap-4 w-[25rem]">
+                <div>
+                  <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Lad lüt i</span>
+                  <div class="flex">
+                    <p-inputgroup>
+                      <input pInputText />
+                      <button pButton label="Ilade" icon="pi pi-users"></button>
+                    </p-inputgroup>
+                  </div>
+                </div>
+                <div>
+                  <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Persone</span>
+                  <ul class="list-none p-0 m-0 flex flex-col gap-4">
+                    @for(member of members; track member) {
+                      <li class="flex items-center gap-2">
+                        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/avatar/' + member.image" style="width: 32px" />
+                        <div>
+                          <span class="font-medium">{{ member.name }}</span>
+                          <div class="text-sm text-muted-color">{{ member.email }}</div>
+                        </div>
+                        <div class="flex items-center gap-2 text-muted-color ml-auto text-sm">
+                          <span>{{ member.role }}</span>
+                          <i class="pi pi-angle-down"></i>
+                        </div>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            </p-popover>
+          </div>
+          <div class="flex pt-6 justify-between">
+            <p-button (onClick)="activateCallback(2)" label="Zurück" severity="secondary" icon="pi pi-arrow-left" />
+            <p-button (onClick)="navigateToChoerbli()" label="zum Chörbli" icon="pi pi-arrow-right" iconPos="right" />
+          </div>
+        </ng-template>
+      </p-step-panel>
+    </p-step-panels>
+  </p-stepper>
+</div>
