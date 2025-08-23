@@ -4,6 +4,7 @@ import {Menubar} from 'primeng/menubar';
 import {Avatar} from 'primeng/avatar';
 import {MenuItem} from 'primeng/api';
 import {InputText} from 'primeng/inputtext';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,8 @@ import {InputText} from 'primeng/inputtext';
     NgOptimizedImage,
     Menubar,
     Avatar,
-    InputText
+    InputText,
+    RouterLink
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss'
