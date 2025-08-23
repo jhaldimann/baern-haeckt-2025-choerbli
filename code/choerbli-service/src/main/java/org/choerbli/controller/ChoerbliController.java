@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.choerbli.controller.dto.request.ChoerbliCreationDto;
 import org.choerbli.controller.dto.ChoerbliDto;
 import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
-import org.choerbli.controller.dto.request.VoteCreationDto;
 import org.choerbli.handler.ServiceFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +38,30 @@ public class ChoerbliController {
         return ResponseEntity.ok(choerbli);
     }
 
+    @DeleteMapping("/delete/{choerbliId}")
+    public ResponseEntity<String> delete(@PathVariable(name = "choerbliId") UUID choerbliId) {
+        this.serviceFacade.deleteChoerbli(choerbliId);
+
+        return ResponseEntity.ok().build();
+    }
+
     @PatchMapping("/{choerbliId}/add-user/{userId}")
     public ResponseEntity<ChoerbliDto> addUser(@PathVariable(name = "choerbliId") UUID choerbliId, @PathVariable(name = "userId") UUID userId) {
         final ChoerbliDto choerbli = this.serviceFacade.addUserToChoerbli(choerbliId, userId);
+
+        return ResponseEntity.ok(choerbli);
+    }
+
+    @PatchMapping("/{choerbliId}/assigning")
+    public ResponseEntity<ChoerbliDto> changeToAssigning(@PathVariable(name = "choerbliId") UUID choerbliId) {
+        final ChoerbliDto choerbli = this.serviceFacade.changeChoerbliToAssigning(choerbliId);
+
+        return ResponseEntity.ok(choerbli);
+    }
+
+    @PatchMapping("/{choerbliId}/finish")
+    public ResponseEntity<ChoerbliDto> finish(@PathVariable(name = "choerbliId") UUID choerbliId) {
+        final ChoerbliDto choerbli = this.serviceFacade.finishChoerbli(choerbliId);
 
         return ResponseEntity.ok(choerbli);
     }

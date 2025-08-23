@@ -13,5 +13,13 @@ public interface ChoerbliPort {
 
     ChoerbliDto update(ChoerbliUpdateDto updateDto);
 
+    void delete(UUID id);
+
     ChoerbliDto addUser(UUID id, UUID userId);
+
+    ChoerbliDto assignUserToItem(UUID id, UUID userId, UUID itemId);
+
+    ChoerbliDto changeToAssigning(UUID id);
+
+    ChoerbliDto finish(UUID id);
 }
