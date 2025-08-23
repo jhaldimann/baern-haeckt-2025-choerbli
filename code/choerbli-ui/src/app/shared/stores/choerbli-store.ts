@@ -7,13 +7,11 @@ import {finalize} from 'rxjs';
 type ChoerbliState = {
   choerbli: Choerbli | undefined;
   isLoading: boolean;
-  isSaved: boolean;
 };
 
 const initialState: ChoerbliState = {
   choerbli: undefined,
   isLoading: false,
-  isSaved: false,
 };
 
 export const ChoerbliStore = signalStore(
@@ -26,18 +24,21 @@ export function withChoerbliMethods() {
   return signalStoreFeature(
     withMethods((store, choerbliApiService = inject(ChoerbliApiService)) => ({
           loadChoerbli(id: string) {
-            const choerbli: Choerbli = {description: '', endDate: new Date(), name: '', startDate: new Date()}; // TODO: get choerbli from BE
+            const choerbli: Choerbli = {
+              items: [], votes: [],
+              id: '',
+              description: '', endDate: new Date(), name: '', startDate: new Date()
+            };
             patchState(store, {...choerbli});
           },
           createChoerbli(choerbli: Choerbli): void {
             patchState(store, {isLoading: true})
             choerbliApiService.createChoerbli(choerbli).pipe(
-              finalize(() => patchState(store, {isLoading: false, isSaved: true})),
-            ).subscribe(() => {
-                patchState(store, {choerbli, isSaved: true})
+              finalize(() => patchState(store, {isLoading: false})),
+            ).subscribe((response: Choerbli) => {
+                patchState(store, {choerbli: response})
               }
             )
-
           }
         }
       )

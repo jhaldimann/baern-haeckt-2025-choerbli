@@ -1,4 +1,4 @@
-import {Component, effect, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Step, StepList, StepPanel, StepPanels, Stepper} from 'primeng/stepper';
 import {NgClass} from '@angular/common';
 import {Button, ButtonDirective} from 'primeng/button';
@@ -13,7 +13,7 @@ import {LottieAnimation} from '../../shared/components/lottie-animation/lottie-a
 import {UserStore} from '../../shared/stores/user-store';
 import {ChoerbliStore} from '../../shared/stores/choerbli-store';
 import {Choerbli} from '../../shared/models/choerbli.model';
-import {toObservable} from '@angular/core/rxjs-interop';
+import {User} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-choerbli-creation',
@@ -40,23 +40,24 @@ import {toObservable} from '@angular/core/rxjs-interop';
 })
 export class ChoerbliCreation {
   constructor() {}
-  choerbli: Choerbli = {description: '', endDate: new Date(), name: '', startDate: new Date()};
+  choerbli: Choerbli = {items: [], votes: [], id: '', description: '', endDate: new Date(), name: '', startDate: new Date()};
+  user: User = {email: '', id: '', name: '', choerbliId: ''};
   activeStep: number = 1;
-  choerbliId: string = 'randomUUID12356';
   private router: Router = inject(Router);
   members = [
     { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
     { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
     { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
   ];
-  readonly store = inject(ChoerbliStore);
+  readonly choerbliStore = inject(ChoerbliStore);
+  readonly userStore = inject(UserStore);
   get link(): string{
     const baseURL = 'http://localhost:4200/';
-    return baseURL+'choerbli/'+this.choerbliId
+    return baseURL+'choerbli/'+this.choerbliStore.choerbli()?.id
   }
 
   navigateToChoerbli(): void {
-    this.router.navigate(['/choerbli', this.choerbliId]);
+    this.router.navigate(['/choerbli', this.choerbliStore.choerbli()?.id]);
   }
 
   copyLinkToClipboard(): void {
@@ -64,7 +65,13 @@ export class ChoerbliCreation {
   }
 
   createChoerbli() {
-    this.store.createChoerbli(this.choerbli);
+    this.choerbliStore.createChoerbli(this.choerbli);
+    this.activeStep = 2;
+  }
+
+  createUser() {
+    this.user.choerbliId = this.choerbliStore.choerbli()?.id ?? '';
+    this.userStore.createUser(this.user);
     this.activeStep = 3;
   }
 }

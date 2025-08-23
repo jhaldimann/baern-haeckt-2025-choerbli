@@ -3,4 +3,7 @@ export type Choerbli = {
   description: string;
   startDate: Date;
   endDate: Date;
+  id: string;
+  votes: [],
+  items: []
 }

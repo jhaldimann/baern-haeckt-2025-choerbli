@@ -55,7 +55,7 @@ create table if not exists user_rank (
 create table if not exists vote (
     id uuid not null,
     factor int,
-    item_descriptor_id uuid,
+    item_description_id uuid,
     user_id uuid,
     choerbli_id uuid,
     primary key (id)
