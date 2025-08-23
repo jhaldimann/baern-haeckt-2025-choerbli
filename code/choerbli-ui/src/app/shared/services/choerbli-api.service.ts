@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Choerbli} from '../models/choerbli.model';
+import {Choerbli, Summary} from '../models/choerbli.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -18,5 +18,9 @@ export class ChoerbliApiService {
 
   getChoerbli(id: string) {
     return this.http.get<Choerbli>(this.baseUrl+'/api/choerbli/'+id);
+  }
+
+  getSummary(id: string) {
+    return this.http.get<Summary>(this.baseUrl+'/api/choerbli/summary/'+id);
   }
 }

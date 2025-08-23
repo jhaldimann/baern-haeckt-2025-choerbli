@@ -30,7 +30,7 @@
 } @else if (choerbliStore.choerbli().state === ChoerbliStatus.ASSIGNING) {
   <app-assigning-form></app-assigning-form>
 } @else if (choerbliStore.choerbli().state === ChoerbliStatus.DONE) {
-  <span>yay finito</span>
+  <app-ranking></app-ranking>
 }
 
 @if (choerbliStore.choerbli().state !== ChoerbliStatus.DONE && userStore.user().id) {

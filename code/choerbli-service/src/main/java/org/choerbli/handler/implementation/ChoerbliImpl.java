@@ -7,7 +7,6 @@ import org.apache.coyote.BadRequestException;
 import org.choerbli.controller.dto.*;
 import org.choerbli.controller.dto.request.ChoerbliCreationDto;
 import org.choerbli.controller.dto.request.ChoerbliUpdateDto;
-import org.choerbli.controller.dto.request.ConsequenceCreationDto;
 import org.choerbli.handler.port.ChoerbliPort;
 import org.choerbli.mapper.*;
 import org.choerbli.model.*;
@@ -17,6 +16,8 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.summingInt;
 
 @Component
 @RequiredArgsConstructor
@@ -122,7 +123,7 @@ class ChoerbliImpl implements ChoerbliPort {
                 .stream()
                 .collect(Collectors.groupingBy(
                         Vote::getItemDescription,
-                        Collectors.summingInt(Vote::getFactor)
+                        summingInt(Vote::getFactor)
                 ));
 
         for (Map.Entry<ItemDescription, Integer> entry : itemVotes.entrySet()) {
@@ -158,27 +159,32 @@ class ChoerbliImpl implements ChoerbliPort {
 
         choerbli.get().setState(ChoerbliStateDto.DONE.getState());
 
-        final List<Item> items = this.itemRepository.findAllByChoerbliId(choerbli.get().getId());
+        List<Item> items = this.itemRepository.findAllByChoerbliId(choerbli.get().getId());
+
+        final List<User> users = this.userRepository.findAllByChoerbliId(choerbli.get().getId());
+
+        var opferUser = users.stream().min(Comparator.comparingInt(User::getPoints)).orElse(null);
 
         for (Item item : items) {
             User user = item.getUser();
 
             if (user == null) {
                 item.setPoints(ItemDto.DEFAULT_POINTS);
-
-                final List<User> users = this.userRepository.findAllByChoerbliId(choerbli.get().getId());
-
-                user = users.stream().min(Comparator.comparingInt(User::getPoints)).orElse(null);
-
-                if (user == null) {
+                if (opferUser == null) {
                     throw new InternalError("The list of users for a choerbli cannot be empty.");
                 }
+                item.setUser(opferUser);
+                this.itemRepository.save(item);
             }
-
-            user.setPoints(user.getPoints() + item.getPoints());
-
-            this.userRepository.save(user);
         }
+
+        items = this.itemRepository.findAllByChoerbliId(choerbli.get().getId());
+        items.stream()
+                .collect(Collectors.groupingBy(Item::getUser, summingInt(Item::getPoints)))
+                .forEach((user, value) -> {
+                    user.setPoints(value);
+                    userRepository.save(user);
+                });
 
         return this.choerbliMapper.toChoerbliDto(choerbli.get());
     }
@@ -207,7 +213,7 @@ class ChoerbliImpl implements ChoerbliPort {
                 .stream()
                 .sorted(Comparator.comparingInt(User::getPoints))
                 .map(userMapper::toUserDto)
-                .toList();
+                .toList().reversed();
 
         final int userCount = rankedUsers.size();
 

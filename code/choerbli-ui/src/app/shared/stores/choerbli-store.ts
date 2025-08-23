@@ -1,4 +1,4 @@
-import {Choerbli} from '../models/choerbli.model';
+import {Choerbli, Summary} from '../models/choerbli.model';
 import {patchState, signalStore, signalStoreFeature, withMethods, withState} from '@ngrx/signals';
 import {inject} from '@angular/core';
 import {ChoerbliApiService} from '../services/choerbli-api.service';
@@ -7,6 +7,7 @@ import {finalize} from 'rxjs';
 type ChoerbliState = {
   choerbli: Choerbli;
   isLoading: boolean;
+  summary: Summary;
 };
 const initialState: ChoerbliState = {
   choerbli: {
@@ -19,6 +20,21 @@ const initialState: ChoerbliState = {
     items: [],
     state: undefined,
     consequences: []
+  },
+  summary: {
+    choerbli: {
+      name: "",
+      description: "",
+      startDate: undefined,
+      endDate: undefined,
+      id: "",
+      votes: [],
+      items: [],
+      state: undefined,
+      consequences: []
+    },
+    userSummaries: [],
+    items: [],
   },
   isLoading: false,
 };
@@ -35,6 +51,11 @@ export function withChoerbliMethods() {
           setChoerbliId(id: string) {
             patchState(store, {choerbli: {id: id}});
           },
+        getSummary(id: string) {
+          choerbliApiService.getSummary(id).subscribe((summary) => {
+            patchState(store, {summary});
+          })
+        },
         loadChoerbliById(id: string) {
             patchState(store, {isLoading: true})
             choerbliApiService.getChoerbli(id).pipe(

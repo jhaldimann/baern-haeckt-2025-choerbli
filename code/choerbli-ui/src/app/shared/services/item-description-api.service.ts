@@ -13,4 +13,8 @@ export class ItemDescriptionApiService {
   getItemDescription(): Observable<ItemDescription[]> {
     return this.http.get<ItemDescription[]>(this.baseUrl+'/api/item/descriptions');
   }
+
+  setUserToItem(itemId: string, userId: string): Observable<void> {
+    return this.http.patch<void>(this.baseUrl+'/api/item/'+itemId+'/assign/'+userId, null);
+  }
 }
