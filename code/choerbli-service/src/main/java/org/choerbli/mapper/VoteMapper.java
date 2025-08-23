@@ -5,7 +5,7 @@ import org.choerbli.controller.dto.request.VoteCreationDto;
 import org.choerbli.model.Vote;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = ChoerbliStateMapper.class)
+@Mapper(componentModel = "spring", uses = {ChoerbliStateMapper.class, ConsequenceTypeMapper.class})
 public interface VoteMapper {
     VoteDto toVoteDto(final Vote vote);
 

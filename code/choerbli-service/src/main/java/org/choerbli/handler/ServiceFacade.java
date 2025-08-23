@@ -19,6 +19,7 @@ public class ServiceFacade {
     private final VotePort votePort;
     private final ItemPort itemPort;
     private final ItemDescriptionPort itemDescriptionPort;
+    private final ConsequencePort consequencePort;
 
     public ChoerbliDto getChoerbliById(final UUID choerbliId) {
         return this.choerbliPort.getById(choerbliId);
@@ -78,5 +79,9 @@ public class ServiceFacade {
 
     public ChoerbliSummaryDto getChoerbliSummary(UUID choerbliId) {
         return this.choerbliPort.getSummary(choerbliId);
+    }
+
+    public ConsequenceDto createConsequence(ConsequenceCreationDto creationDto) {
+        return this.consequencePort.create(creationDto);
     }
 }

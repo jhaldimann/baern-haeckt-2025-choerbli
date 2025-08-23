@@ -19,14 +19,14 @@ public class VoteController {
     private final ServiceFacade serviceFacade;
 
     @PostMapping("/create")
-    public ResponseEntity<VoteDto> create(@RequestPart(name = "creationDto")VoteCreationDto creationDto) {
+    public ResponseEntity<VoteDto> create(@RequestPart(name = "creationDto") VoteCreationDto creationDto) {
         final VoteDto vote = this.serviceFacade.createVote(creationDto);
 
         return ResponseEntity.ok(vote);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<VoteDto> update(@RequestPart(name = "updateDto")VoteUpdateDto updateDto) {
+    public ResponseEntity<VoteDto> update(@RequestPart(name = "updateDto") VoteUpdateDto updateDto) {
         final VoteDto vote = this.serviceFacade.updateVote(updateDto);
 
         return ResponseEntity.ok(vote);

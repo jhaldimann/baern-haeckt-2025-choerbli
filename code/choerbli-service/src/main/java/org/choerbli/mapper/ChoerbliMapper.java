@@ -7,7 +7,7 @@ import org.choerbli.model.Choerbli;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = ChoerbliStateMapper.class)
+@Mapper(componentModel = "spring", uses = {ChoerbliStateMapper.class, ConsequenceTypeMapper.class})
 public interface ChoerbliMapper {
     ChoerbliDto toChoerbliDto(final Choerbli choerbli);
 
