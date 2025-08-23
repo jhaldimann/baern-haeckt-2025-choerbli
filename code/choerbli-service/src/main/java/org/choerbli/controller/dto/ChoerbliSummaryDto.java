@@ -4,5 +4,7 @@ import org.choerbli.model.Choerbli;
 
 import java.util.List;
 
-public record ChoerbliSummaryDto(Choerbli choerbli, List<UserSummaryDto> userSummaries) {
+public record ChoerbliSummaryDto(Choerbli choerbli, List<UserSummaryDto> userSummaries, List<VoteDto> votes,
+                                 List<ItemDto> items,
+                                 List<ConsequenceDto> consequences) {
 }

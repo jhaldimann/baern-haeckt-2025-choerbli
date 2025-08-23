@@ -15,4 +15,6 @@ public interface VoteRepository extends JpaRepository<Vote, UUID> {
     List<Vote> findAllById(Iterable<UUID> uuids);
 
     List<Vote> findByUserId(UUID userId);
+
+    List<Vote> findByChoerbliId(UUID choerbliId);
 }

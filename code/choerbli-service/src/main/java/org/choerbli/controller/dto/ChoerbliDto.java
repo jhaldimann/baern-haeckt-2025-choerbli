@@ -1,7 +1,6 @@
 package org.choerbli.controller.dto;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,9 +12,7 @@ import java.util.UUID;
  * @param startDate    The start date of the choerbli.
  * @param endDate      The end date of the choerbli.
  * @param state        The state of the choerbli.
- * @param consequences The consequences of the choerbli.
  */
 public record ChoerbliDto(UUID id, String name, String description, Date startDate, Date endDate,
-                          ChoerbliStateDto state, List<VoteDto> votes, List<ItemDto> items,
-                          List<ConsequenceDto> consequences) {
+                          ChoerbliStateDto state) {
 }
