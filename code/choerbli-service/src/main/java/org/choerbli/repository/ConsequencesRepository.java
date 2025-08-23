@@ -13,4 +13,6 @@ public interface ConsequencesRepository extends JpaRepository<Consequence, UUID>
     @Override
     @Transactional(readOnly = true)
     List<Consequence> findAllById(Iterable<UUID> uuids);
+
+    List<Consequence> findAllByChoerbliId(UUID choerbliId);
 }

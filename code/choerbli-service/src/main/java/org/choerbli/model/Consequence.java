@@ -20,6 +20,8 @@ public class Consequence {
     @GeneratedValue()
     private UUID id;
     private String description;
+    private int orderOfApplication;
+    private int type;
     @ManyToOne
     private Choerbli choerbli;
 }
