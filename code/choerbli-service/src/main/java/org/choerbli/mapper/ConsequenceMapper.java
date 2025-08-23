@@ -7,7 +7,7 @@ import org.choerbli.model.Consequence;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring", uses = {ConsequenceTypeMapper.class, ChoerbliStateMapper.class})
 public interface ConsequenceMapper {
     ConsequenceDto toConsequenceDto(final Consequence consequence);
 
@@ -15,12 +15,4 @@ public interface ConsequenceMapper {
 
     @Mapping(target = "choerbli", ignore = true)
     Consequence toConsequence(final ConsequenceCreationDto creationDto);
-
-    default ConsequenceTypeDto map(int type) {
-        return ConsequenceTypeDto.fromType(type);
-    }
-
-    default int map(ConsequenceTypeDto typeDto) {
-        return typeDto.getType();
-    }
 }
