@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, Signal} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {Menubar} from 'primeng/menubar';
 import {Avatar} from 'primeng/avatar';
@@ -14,9 +14,12 @@ import {UserStore} from '../../stores/user-store';
     RouterLink
   ],
   templateUrl: './header.html',
-  styleUrl: './header.scss'
+  styleUrl: './header.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   readonly userStore = inject(UserStore);
-
+  get userName(): string {
+    return this.userStore.user.name();
+  }
 }

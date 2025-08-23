@@ -69,7 +69,10 @@ export class ChoerbliCreation {
   }
 
   navigateToChoerbli(): void {
-    this.router.navigate(['/choerbli', this.choerbliStore.choerbli()?.id]);
+    this.router.navigate(['/choerbli', this.choerbliStore.choerbli()?.id])
+      .then(() => {
+        window.location.reload();
+      });
   }
 
   copyLinkToClipboard(): void {
