@@ -2,7 +2,7 @@ package org.choerbli.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.choerbli.controller.dto.ConsequenceDto;
-import org.choerbli.controller.dto.request.ConsequencesCreationDto;
+import org.choerbli.controller.dto.request.ConsequenceCreationDto;
 import org.choerbli.handler.ServiceFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class ConsequenceController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<List<ConsequenceDto>> create(@RequestPart(name = "creationDtos") List<ConsequenceDto> creationDtos) {
+    public ResponseEntity<List<ConsequenceDto>> create(@RequestPart(name = "creationDtos") List<ConsequenceCreationDto> creationDtos) {
         final List<ConsequenceDto> consequences = this.serviceFacade.createConsequences(creationDtos);
 
         return ResponseEntity.ok(consequences);

@@ -2,5 +2,7 @@ package org.choerbli.controller.dto.request;
 
 import org.choerbli.controller.dto.ConsequenceTypeDto;
 
-public record ConsequenceCreationDto(String description, int orderOfApplication, ConsequenceTypeDto type) {
+import java.util.UUID;
+
+public record ConsequenceCreationDto(UUID choerbliId, String description, int orderOfApplication, ConsequenceTypeDto type) {
 }
