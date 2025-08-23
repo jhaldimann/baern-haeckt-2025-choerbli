@@ -28,7 +28,7 @@ export const UserStore = signalStore(
   withState(initialState),
   withUserMethods(),
   withHooks({
-    onInit: (store) => {
+    onInit: (store): void => {
       store.loadUserFromLocalStorage();
     },
   })
@@ -43,11 +43,11 @@ export function withUserMethods() {
               patchState(store, { user: state });
             }
           },
-          createUser(user: User) {
+          createUser(user: User): void {
             patchState(store, {isLoading: true})
             userApiService.createUser(user).pipe(
-              finalize(() => patchState(store, {isLoading: false})),
-            ).subscribe((response: User) => {
+              finalize((): void => patchState(store, {isLoading: false})),
+            ).subscribe((response: User): void => {
                 patchState(store, {user: response});
                 storageService.setItem(USER_KEY, response);
               }
