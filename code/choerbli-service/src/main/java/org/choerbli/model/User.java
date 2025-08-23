@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity(name = "USER")
+@Entity(name = "CH_USER")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,5 +20,9 @@ public class User {
     @GeneratedValue()
     private UUID id;
     private String email;
-    private String username;
+    private String name;
+    private int points;
+
+    @ManyToOne
+    private Choerbli choerbli;
 }

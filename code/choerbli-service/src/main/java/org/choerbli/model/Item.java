@@ -23,6 +23,8 @@ public class Item {
     private Choerbli choerbli;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private ItemDescription itemDescription;
     private int points;
     private double price;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "CHOERBLI")
@@ -16,11 +18,14 @@ public class Choerbli {
     @Id
     @GeneratedValue()
     private UUID id;
-    @ManyToOne
-    private User organizer;
     private int state;
     private String name;
     private String description;
     private Date startDate;
     private Date endDate;
+
+    @OneToMany(mappedBy = "choerbli")
+    private Set<Item> items;
+    @OneToMany(mappedBy = "choerbli")
+    private Set<Vote> votes;
 }

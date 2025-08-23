@@ -44,10 +44,6 @@ public class ServiceFacade {
         return this.userPort.create(creationDto);
     }
 
-    public ChoerbliDto addUserToChoerbli(final UUID choerbliId, final UUID userId) {
-        return this.choerbliPort.addUser(choerbliId, userId);
-    }
-
     public ChoerbliDto changeChoerbliToAssigning(final UUID choerbliId) {
         return this.choerbliPort.changeToAssigning(choerbliId);
     }

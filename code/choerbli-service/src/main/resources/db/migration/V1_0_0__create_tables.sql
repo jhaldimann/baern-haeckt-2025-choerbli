@@ -1,6 +1,5 @@
 create table if not exists choerbli (
     id uuid not null,
-    organizer_id uuid not null,
     state int not null,
     name varchar(255),
     description varchar(255),
@@ -82,6 +81,3 @@ alter table if exists consequences
 
 alter table if exists item_description
     add constraint fk_category_id foreign key (category_id) references category;
-
-alter table if exists choerbli
-    add constraint organisor_id foreign key (organizer_id) references ch_user;
