@@ -1,1 +1,18 @@
-<p>choerbli works!</p>
+<h1 class="title">Chörbli - {{id}}</h1>
+@if ((items | async); as itemList) {
+  <div class="content-page" >
+    @for (category of getAllItemCategories(itemList); track category) {
+      <h2>
+        <img class="category-icon" src="/assets/{{category | lowercase}}.png">
+        {{category}}
+      </h2>
+      @for (item of itemList; track item.category) {
+        @if(item && item.category.name == category) {
+          <app-item name="{{item.name}}"></app-item>
+          <br>
+        }
+      }
+      <br>
+    }
+  </div>
+}

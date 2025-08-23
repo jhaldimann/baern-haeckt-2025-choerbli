@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class UserApiService {
-  private http = inject(HttpClient);
+  private http: HttpClient = inject(HttpClient);
   private baseUrl: string = 'http://localhost:8080';
 
   createUser(user: User): Observable<User> {
