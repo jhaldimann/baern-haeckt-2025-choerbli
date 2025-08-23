@@ -1,7 +1,7 @@
 export enum ChoerbliStatus {
-  VOTING,
-  ASSIGNING,
-  DONE
+  VOTING = 'VOTING',
+  ASSIGNING = 'ASSIGNING',
+  DONE = 'DONE',
 }
 
 export type Choerbli = {
