@@ -9,19 +9,17 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity(name = "USERRANK")
+@Entity(name = "USER_RANK")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Userrank {
+public class UserRank {
     @Id
     @GeneratedValue()
     private UUID id;
     private int points;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Choerbli choerbliId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 }

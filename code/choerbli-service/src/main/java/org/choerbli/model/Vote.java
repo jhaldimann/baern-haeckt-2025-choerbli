@@ -17,9 +17,9 @@ public class Vote {
     private UUID id;
     private int factor;
     @ManyToOne(fetch = FetchType.LAZY)
-    private ItemDescription itemDescriptorId;
+    private ItemDescription itemDescription;
     @ManyToOne(fetch = FetchType.LAZY)
-    private User userId;
+    private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Choerbli choerbliId;
+    private Choerbli choerbli;
 }

@@ -1,4 +1,6 @@
 package org.choerbli.controller.dto.request;
 
-public record UserCreationDto(String email, String name) {
+import java.util.UUID;
+
+public record UserCreationDto(String email, String name, UUID choerbliId) {
 }
