@@ -75,4 +75,8 @@ public class ServiceFacade {
     public List<ItemDescriptionDto> getDescriptions() {
         return this.itemDescriptionPort.getAll();
     }
+
+    public ChoerbliSummaryDto getChoerbliSummary(UUID choerbliId) {
+        return this.choerbliPort.getSummary(choerbliId);
+    }
 }
