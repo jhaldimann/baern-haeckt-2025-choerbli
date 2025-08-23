@@ -2,6 +2,8 @@ package org.choerbli.handler.implementation;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.apache.coyote.BadRequestException;
 import org.choerbli.controller.dto.ItemCategoryDto;
 import org.choerbli.controller.dto.UserVoteInfoDto;
 import org.choerbli.controller.dto.VoteDto;
@@ -34,7 +36,16 @@ class VoteImpl implements VotePort {
     private final ItemCategoryMapper itemCategoryMapper;
 
     @Override
+    @SneakyThrows
     public VoteDto create(VoteCreationDto creationDto) {
+        final List<Vote> existingVotes = this.voteRepository.findByUserId(creationDto.userId());
+
+        for (Vote v : existingVotes) {
+            if (v.getChoerbli().getId().equals(creationDto.choerbliId()) && v.getItemDescription().getId().equals(creationDto.itemDescriptionId())) {
+                throw new BadRequestException("The user %s has already voted for item %s.".formatted(creationDto.userId(), creationDto.itemDescriptionId()));
+            }
+        }
+
         final Vote vote = this.voteMapper.toVote(creationDto);
 
         final Choerbli choerbli = this.choerbliRepository.findById(creationDto.choerbliId()).orElseThrow(() -> new EntityNotFoundException("The choerbli with ID %s was not found.".formatted(creationDto.choerbliId())));
