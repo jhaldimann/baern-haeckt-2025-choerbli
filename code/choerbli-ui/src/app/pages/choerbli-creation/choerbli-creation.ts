@@ -4,11 +4,12 @@ import {NgClass} from '@angular/common';
 import {Button, ButtonDirective} from 'primeng/button';
 import {ChoerbliForm} from '../../shared/components/choerbli-form/choerbli-form';
 import {UserForm} from '../../shared/components/user-form/user-form';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Popover} from 'primeng/popover';
 import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {InputText} from 'primeng/inputtext';
+import {LottieAnimation} from '../../shared/components/lottie-animation/lottie-animation';
 
 @Component({
   selector: 'app-choerbli-creation',
@@ -26,7 +27,8 @@ import {InputText} from 'primeng/inputtext';
     InputGroup,
     InputGroupAddon,
     InputText,
-    ButtonDirective
+    ButtonDirective,
+    LottieAnimation
   ],
   templateUrl: './choerbli-creation.html',
   styleUrl: './choerbli-creation.scss'
@@ -41,7 +43,6 @@ export class ChoerbliCreation {
     { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
     { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
   ];
-
   get link(): string{
     const baseURL = 'http://localhost:4200/';
     return baseURL+'/choerbli/'+this.choerbliId
@@ -49,5 +50,9 @@ export class ChoerbliCreation {
 
   navigateToChoerbli() {
     this.router.navigate(['/choerbli', this.choerbliId]);
+  }
+
+  copyLinkToClipboard() {
+    navigator.clipboard.writeText(this.link);
   }
 }

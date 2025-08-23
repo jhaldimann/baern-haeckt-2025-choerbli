@@ -69,7 +69,7 @@
           </div>
           <div class="flex pt-6 justify-between">
             <p-button (onClick)="activateCallback(1)" label="Zurück" severity="secondary" icon="pi pi-arrow-left" />
-            <p-button (onClick)="activateCallback(3)" label="Weiter" icon="pi pi-arrow-right" iconPos="right" />
+            <p-button (onClick)="activateCallback(3)" label="Erstellen" icon="pi pi-arrow-right" iconPos="right" />
           </div>
         </ng-template>
       </p-step-panel>
@@ -78,26 +78,27 @@
         <ng-template #content let-activateCallback="activateCallback">
           <div class="flex flex-col gap-2 mx-auto self-center" style="min-height: 16rem; max-width: 24rem">
             <h2 class="font-bold text-lg">Chörbli Erstellt</h2>
-            <div class="text-center items-center">
-              <img alt="logo" src="https://primefaces.org/cdn/primeng/images/stepper/content.svg" />
+            <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Teil dis chörbli</span>
+            <div class="flex gap-2">
+            <app-lottie-animation class="background"></app-lottie-animation>
+            <div>
+              <p-inputgroup>
+                <input pInputText [value]="link" readonly class="w-[25rem]" />
+                <p-inputgroup-addon>
+                  <p-button class="h-full" (click)="copyLinkToClipboard()">
+                    <i class="pi pi-copy"></i>
+                  </p-button>
+                </p-inputgroup-addon>
+              </p-inputgroup>
             </div>
-            <p-button (click)="op.toggle($event)" icon="pi pi-share-alt" label="Teile" />
+            <p-button (click)="op.toggle($event)" icon="pi pi-share-alt" label="Teilen" /></div>
             <p-popover #op>
               <div class="flex flex-col gap-4 w-[25rem]">
-                <div>
-                  <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Teil dis chörbli</span>
-                  <p-inputgroup>
-                    <input pInputText [value]="link" readonly class="w-[25rem]" />
-                    <p-inputgroup-addon>
-                      <i class="pi pi-copy"></i>
-                    </p-inputgroup-addon>
-                  </p-inputgroup>
-                </div>
                 <div>
                   <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">Lad lüt i</span>
                   <div class="flex">
                     <p-inputgroup>
-                      <input pInputText disabled />
+                      <input pInputText />
                       <button pButton label="Ilade" icon="pi pi-users"></button>
                     </p-inputgroup>
                   </div>
