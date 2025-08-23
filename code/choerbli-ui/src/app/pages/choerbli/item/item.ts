@@ -18,14 +18,15 @@ export class Item {
 
   downVote(): void {
     const user: any = localStorage.getItem('USER');
-    console.log(JSON.parse(user).name)
-    const choerbliId = this.choerbliId;
-    this.voteApiService.createVote(user, choerbliId(), this.itemId(),-1).pipe(take(1)).subscribe();
+    const username = JSON.parse(user).id;
+    const choerbliId = JSON.parse(user).choerbli.id;
+    this.voteApiService.createVote(username, choerbliId, this.itemId(),-1).pipe(take(1)).subscribe();
   }
 
   upVote(): void {
-    const user = localStorage.getItem('USER');
-    const choerbliId = this.choerbliId;
-    this.voteApiService.createVote(user, choerbliId(), this.itemId(),1).pipe(take(1)).subscribe();
+    const user: any = localStorage.getItem('USER');
+    const username = JSON.parse(user).id;
+    const choerbliId = JSON.parse(user).choerbli.id;
+    this.voteApiService.createVote(username, choerbliId, this.itemId(),1).pipe(take(1)).subscribe();
   }
 }

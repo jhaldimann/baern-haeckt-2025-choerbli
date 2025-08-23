@@ -1,6 +1,10 @@
+import {ItemDescription} from './item-description.model';
+import {Choerbli} from './choerbli.model';
+import {User} from './user.model';
+
 export type Vote = {
-  userId: string,
-  choerbliId: string,
-  itemDescriptionId: string,
+  user: User,
+  choerbli: Choerbli,
+  itemDescription: ItemDescription,
   factor: number
 }
