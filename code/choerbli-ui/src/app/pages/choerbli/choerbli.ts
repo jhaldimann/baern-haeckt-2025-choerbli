@@ -44,7 +44,7 @@ export class Choerbli implements OnInit {
 
   ngOnInit(): void {
     const user: any = localStorage.getItem('USER');
-    const userId: any = JSON.parse(user).id;
+    const userId: any = JSON.parse(user)?.id;
 
     this.id = window.location.pathname.split('/')[2];
     this.updateItems(userId);
