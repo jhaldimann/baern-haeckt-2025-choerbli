@@ -25,6 +25,7 @@ create table if not exists category (
 create table if not exists item_description (
     id uuid not null,
     category_id uuid,
+    name varchar(255),
     primary key (id)
 );
 
