@@ -1,1 +1,18 @@
-<p>choerbli works!</p>
+<h1 class="title">Chörbli - {{id}}</h1>
+<div class="content-page">
+  @for (category of getAllItemCategories(items); track category) {
+
+    <h2>
+      <img class="category-icon" src="/assets/{{category | lowercase}}.png">
+      {{category}}
+    </h2>
+    @for (item of items; track item.category) {
+      @if(item.category == category) {
+        <app-item name="{{item.itemName}}"></app-item>
+        <br>
+      }
+    }
+    <br>
+  }
+
+</div>
