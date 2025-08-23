@@ -4,17 +4,20 @@ import {inject} from '@angular/core';
 import {LocalStorageService} from '../services/local-storage.service';
 import {UserApiService} from '../services/user-api.service';
 import {finalize} from 'rxjs';
-import {Choerbli} from '../models/choerbli.model';
-import {ChoerbliStore} from './choerbli-store';
 
 
 type UserState = {
-  user: User | undefined;
+  user: User;
   isLoading: boolean;
 };
 
 const initialState: UserState = {
-  user: undefined,
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    choerbliId: ""
+  },
   isLoading: false,
 };
 
@@ -36,15 +39,17 @@ export function withUserMethods() {
     withMethods((store, storageService = inject(LocalStorageService), userApiService = inject(UserApiService)) => ({
           loadUserFromLocalStorage() {
             const state: UserState | null = storageService.getItem(USER_KEY);
-            patchState(store, { ...state });
+            if (state) {
+              patchState(store, { user: state });
+            }
           },
           createUser(user: User) {
             patchState(store, {isLoading: true})
             userApiService.createUser(user).pipe(
               finalize(() => patchState(store, {isLoading: false})),
             ).subscribe((response: User) => {
-                patchState(store, {user: response})
-                storageService.setItem(USER_KEY, user);
+                patchState(store, {user: response});
+                storageService.setItem(USER_KEY, response);
               }
             )
           }

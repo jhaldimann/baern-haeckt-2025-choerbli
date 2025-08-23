@@ -40,7 +40,9 @@ import {User} from '../../shared/models/user.model';
 })
 export class ChoerbliCreation {
   constructor() {}
-  choerbli: Choerbli = {items: [], votes: [], id: '', description: '', endDate: new Date(), name: '', startDate: new Date()};
+  choerbli: Choerbli = {
+    state: undefined,
+    items: [], votes: [], id: '', description: '', endDate: new Date(), name: '', startDate: new Date()};
   user: User = {email: '', id: '', name: '', choerbliId: ''};
   activeStep: number = 1;
   private router: Router = inject(Router);
