@@ -16,4 +16,5 @@ import java.util.UUID;
  */
 public record ItemDto(UUID id, ChoerbliDto choerbli, @Nullable UserDto user, Integer points, Double price, ItemDescriptionDto itemDescription) {
     public static final int DEFAULT_POINTS = 2;
+    public static final int UNASSIGNED_POINT_INCREASE = 1;
 }

@@ -14,4 +14,6 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
     @Override
     @Transactional(readOnly = true)
     List<Item> findAllById(Iterable<UUID> uuids);
+
+    List<Item> findAllByChoerbliId(UUID choerbliId);
 }
