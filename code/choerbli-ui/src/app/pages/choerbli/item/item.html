@@ -7,13 +7,13 @@
     {{name()}}
   </div>
 
-  <div class="up-vote-button" [ngClass]="{'disabled': voteFactor === -1}">
+  <div class="up-vote-button" [ngClass]="{'enabled-up-vote': voteFactor === 1}">
     <button type="button" (click)="upVote(voteId)">
       <i class="pi pi-arrow-up"></i>
     </button>
   </div>
 
-  <div class="down-vote-button" [ngClass]="{'disabled': voteFactor === 1}">
+  <div class="down-vote-button" [ngClass]="{'enabled-down-vote': voteFactor === -1}">
     <button type="button" (click)="downVote(voteId)">
       <i class="pi pi-arrow-down"></i>
     </button>
