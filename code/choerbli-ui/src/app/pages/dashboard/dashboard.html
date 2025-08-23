@@ -1,0 +1,124 @@
+<div class="mb-16">
+  <div class="flex flex-col items-center mb-12">
+    <img ngSrc="/assets/dashboard.png" alt="logo" height="556" width="800" priority>
+    <h1 class="text-5xl font-bold text-center xl:text-left leading-tight">
+      Dr best Helfer zum Ichöif für Tripps ds plane
+    </h1>
+    <p
+      class="text-center mt-0 mb-8 text-surface-500 dark:text-surface-400 font-medium text-xl leading-relaxed lg:px-56">
+      Chörbli ist die App, mit der Gruppen spielerisch ihre Einkäufe für Trips organisieren.
+      Teilnehmer:innen stimmen gemeinsam ab, was gebraucht wird, und sammeln Punkte fürs Mitbringen.
+      Am Ende sorgt ein Leaderboard mit Belohnungen und Bestrafungen für Spass, Fairness und Motivation.
+    </p>
+    <p-button>
+      <span class="font-bold text-lg">Erstell dis Chörbli!</span><i
+      class="pi pi-arrow-right ms-4"></i>
+    </p-button>
+  </div>
+
+  <div class="mx-88 description">
+    <h2 class="font-bold text-xl m-2 mt-6">🧺 Chörbli – Gamified Einkaufs-App für Trips</h2>
+    <p-panel header="Grundidee">
+      <ul>
+        <li>Chörbli ist eine App, mit der Gruppen kollaborativ ihre Einkäufe für Trips organisieren können.</li>
+        <li>Durch ein Gamification-System sammeln die Teilnehmer:innen Punkte für das Mitbringen von Dingen.</li>
+        <li>Am Ende des Trips gibt es ein Leaderboard mit Belohnungen für die Top-Performer und Bestrafungen für die
+          Letztplatzierten.
+        </li>
+      </ul>
+    </p-panel>
+
+    <h2 class="font-bold text-xl m-2 ml-4 mt-6">Ablauf (Phasen)</h2>
+    <p-accordion value="0">
+      <p-accordion-panel value="0">
+        <p-accordion-header>Initial Setup (Organisator)</p-accordion-header>
+        <p-accordion-content>
+          <ul class="m-0">
+            <li>Organisator erstellt einen neuen Trip via Link.</li>
+
+            <li>Eingaben:</li>
+
+            <li>Trip-Name</li>
+
+            <li>Beschreibung</li>
+
+            <li>Zeitraum (von–bis)</li>
+
+            <li>Kategorien (optional: z. B. Food, Getränke, Spiele, Sonstiges)</li>
+
+            <li>Organisator legt Preise und Bestrafungen für das Leaderboard fest.</li>
+          </ul>
+        </p-accordion-content>
+      </p-accordion-panel>
+
+      <p-accordion-panel value="1">
+        <p-accordion-header>Voting-Phase</p-accordion-header>
+        <p-accordion-content>
+          <ul class="m-0">
+            <li>Teilnehmer:innen treten über Link bei (Name eingeben).</li>
+
+            <li>App zeigt initiale Vorschlagsliste (z. B. Grill, Bier, Snacks, Holz …).</li>
+
+            <li>Jede:r kann neue Einträge hinzufügen.</li>
+
+            <li>Abstimmung über Items:</li>
+
+            <li>✅ Vote für „brauchen wir“</li>
+
+            <li>❌ Vote für „nicht nötig“</li>
+
+            <li>Gruppierung nach Kategorien</li>
+
+            <li>Regeln:</li>
+
+            <li>Vote-Limit pro Person</li>
+
+            <li>Super-Like kostet 5 Punkte, zählt aber wie 3 Stimmen.</li>
+          </ul>
+        </p-accordion-content>
+      </p-accordion-panel>
+
+      <p-accordion-panel value="2">
+        <p-accordion-header>Assigning-Phase</p-accordion-header>
+        <p-accordion-content>
+          <ul class="m-0">
+            <li>Automatisch eine Woche vor Startdatum wechselt der Trip in diese Phase.</li>
+
+            <li>Teilnehmer:innen wählen, was sie mitbringen wollen.</li>
+
+            <li>Punkte-System:</li>
+
+            <li>Für jedes bestätigte Item erhält die Person Punkte.</li>
+
+            <li>Extra-Punkte, wenn die Mehrheit das Item nützlich findet.</li>
+          </ul>
+        </p-accordion-content>
+      </p-accordion-panel>
+      <p-accordion-panel value="3">
+        <p-accordion-header>Timeout / Auto-Assign</p-accordion-header>
+        <p-accordion-content>
+          <ul class="m-0">
+            <li>Wenn Items unverteilt bleiben:</li>
+
+            <li>Auto-Zuweisung an Personen mit wenigsten Punkten (Fairness).</li>
+          </ul>
+        </p-accordion-content>
+      </p-accordion-panel>
+      <p-accordion-panel value="4">
+        <p-accordion-header>Closed / Trip-Final</p-accordion-header>
+        <p-accordion-content>
+          <ul class="m-0">
+            <li>Trip ist „geschlossen“.</li>
+
+            <li>Endgültiges Leaderboard mit Punktestand wird angezeigt.</li>
+
+            <li>Belohnungen und Bestrafungen werden angezeigt.</li>
+
+            <li>(Optionale Abrechnung via Twint – Out of Scope).</li>
+          </ul>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+  </div>
+
+</div>
