@@ -1,8 +1,11 @@
 package org.choerbli.handler.port;
 
 import org.choerbli.controller.dto.ItemDto;
-import org.choerbli.controller.dto.request.ItemUpdateDto;
+
+import java.util.UUID;
 
 public interface ItemPort {
-    ItemDto update(ItemUpdateDto updateDto);
+    ItemDto assign(UUID id, UUID userId);
+
+    ItemDto updatePrice(UUID id, Double price);
 }

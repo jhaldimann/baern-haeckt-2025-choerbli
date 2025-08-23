@@ -2,17 +2,12 @@ package org.choerbli.handler;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.choerbli.controller.dto.ChoerbliDto;
-import org.choerbli.controller.dto.ItemDto;
-import org.choerbli.controller.dto.UserDto;
-import org.choerbli.controller.dto.VoteDto;
+import org.choerbli.controller.dto.*;
 import org.choerbli.controller.dto.request.*;
-import org.choerbli.handler.port.ChoerbliPort;
-import org.choerbli.handler.port.ItemPort;
-import org.choerbli.handler.port.UserPort;
-import org.choerbli.handler.port.VotePort;
+import org.choerbli.handler.port.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -23,6 +18,7 @@ public class ServiceFacade {
     private final UserPort userPort;
     private final VotePort votePort;
     private final ItemPort itemPort;
+    private final ItemDescriptionPort itemDescriptionPort;
 
     public ChoerbliDto getChoerbliById(final UUID choerbliId) {
         return this.choerbliPort.getById(choerbliId);
@@ -34,6 +30,10 @@ public class ServiceFacade {
 
     public ChoerbliDto updateChoerbli(final ChoerbliUpdateDto updateDto) {
         return this.choerbliPort.update(updateDto);
+    }
+
+    public void deleteChoerbli(final UUID choerbliId) {
+        this.choerbliPort.delete(choerbliId);
     }
 
     public UserDto getUserById(final UUID userId) {
@@ -60,7 +60,23 @@ public class ServiceFacade {
         return this.votePort.create(voteDto);
     }
 
-    public ItemDto updateItem(final ItemUpdateDto updateDto) {
-        return this.itemPort.update(updateDto);
+    public VoteDto updateVote(final VoteUpdateDto updateDto) {
+        return this.votePort.update(updateDto);
+    }
+
+    public UserVoteInfoDto getUserVoteInfo(final UUID userId) {
+        return this.votePort.getUserVoteInfo(userId);
+    }
+
+    public ItemDto assignItem(final UUID itemId, final UUID userId) {
+        return this.itemPort.assign(itemId, userId);
+    }
+
+    public ItemDto updateItemPrice(final UUID itemId, final Double price) {
+        return this.itemPort.updatePrice(itemId, price);
+    }
+
+    public List<ItemDescriptionDto> getDescriptions() {
+        return this.itemDescriptionPort.getAll();
     }
 }

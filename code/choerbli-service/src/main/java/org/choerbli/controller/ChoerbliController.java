@@ -38,6 +38,13 @@ public class ChoerbliController {
         return ResponseEntity.ok(choerbli);
     }
 
+    @DeleteMapping("/delete/{choerbliId}")
+    public ResponseEntity<String> delete(@PathVariable(name = "choerbliId") UUID choerbliId) {
+        this.serviceFacade.deleteChoerbli(choerbliId);
+
+        return ResponseEntity.ok().build();
+    }
+
     @PatchMapping("/{choerbliId}/add-user/{userId}")
     public ResponseEntity<ChoerbliDto> addUser(@PathVariable(name = "choerbliId") UUID choerbliId, @PathVariable(name = "userId") UUID userId) {
         final ChoerbliDto choerbli = this.serviceFacade.addUserToChoerbli(choerbliId, userId);

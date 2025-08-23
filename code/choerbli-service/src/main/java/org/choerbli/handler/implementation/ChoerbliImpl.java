@@ -28,6 +28,11 @@ class ChoerbliImpl implements ChoerbliPort {
     }
 
     @Override
+    public void delete(UUID id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public ChoerbliDto addUser(UUID id, UUID userId) {
         throw new UnsupportedOperationException();
     }

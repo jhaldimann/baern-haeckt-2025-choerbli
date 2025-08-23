@@ -1,10 +1,13 @@
 package org.choerbli.controller.dto;
 
+import java.util.UUID;
+
 /**
  * The description of an item.
  *
- * @param name          The name of the item.
- * @param category      The category of the item.
+ * @param id            The ID of the item description.
+ * @param name          The name of the item description.
+ * @param category      The category of the item description.
  */
-public record ItemDescriptionDto(String name, ItemCategoryDto category) {
+public record ItemDescriptionDto(UUID id, String name, ItemCategoryDto category) {
 }
