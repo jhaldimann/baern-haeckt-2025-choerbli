@@ -10,6 +10,7 @@ import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {InputText} from 'primeng/inputtext';
 import {LottieAnimation} from '../../shared/components/lottie-animation/lottie-animation';
+import {UserStore} from '../../shared/stores/user-store';
 
 @Component({
   selector: 'app-choerbli-creation',
@@ -30,6 +31,7 @@ import {LottieAnimation} from '../../shared/components/lottie-animation/lottie-a
     ButtonDirective,
     LottieAnimation
   ],
+  providers: [UserStore],
   templateUrl: './choerbli-creation.html',
   styleUrl: './choerbli-creation.scss'
 })
@@ -37,7 +39,7 @@ export class ChoerbliCreation {
   constructor() {}
   activeStep: number = 1;
   choerbliId: string = 'randomUUID12356';
-  private router = inject(Router);
+  private router: Router = inject(Router);
   members = [
     { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
     { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
@@ -45,14 +47,14 @@ export class ChoerbliCreation {
   ];
   get link(): string{
     const baseURL = 'http://localhost:4200/';
-    return baseURL+'/choerbli/'+this.choerbliId
+    return baseURL+'choerbli/'+this.choerbliId
   }
 
-  navigateToChoerbli() {
+  navigateToChoerbli(): void {
     this.router.navigate(['/choerbli', this.choerbliId]);
   }
 
-  copyLinkToClipboard() {
+  copyLinkToClipboard(): void {
     navigator.clipboard.writeText(this.link);
   }
 }
