@@ -4,7 +4,6 @@ import {NgOptimizedImage} from '@angular/common';
 import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from 'primeng/accordion';
 import {Button} from 'primeng/button';
 import {Router} from '@angular/router';
-import {UserStore} from '../../shared/stores/user-store';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,10 +21,8 @@ import {UserStore} from '../../shared/stores/user-store';
 })
 export class Dashboard {
   private router = inject(Router);
-  private userStore = inject(UserStore);
 
   navigateToCreation() {
-    this.userStore.clearUser();
     this.router.navigate(['/creation']);
   }
 }
