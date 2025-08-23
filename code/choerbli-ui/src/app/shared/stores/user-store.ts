@@ -24,7 +24,7 @@ const initialState: UserState = {
 const USER_KEY = 'USER'
 
 export const UserStore = signalStore(
-  { providedIn: 'root' },
+  {providedIn: 'root'},
   withState(initialState),
   withUserMethods(),
   withHooks({
@@ -40,8 +40,12 @@ export function withUserMethods() {
           loadUserFromLocalStorage() {
             const state: UserState | null = storageService.getItem(USER_KEY);
             if (state) {
-              patchState(store, { user: state });
+              patchState(store, {user: state});
             }
+          },
+          clearUser() {
+            storageService.clear();
+            patchState(store, {user: initialState.user});
           },
           createUser(user: User): void {
             patchState(store, {isLoading: true})
