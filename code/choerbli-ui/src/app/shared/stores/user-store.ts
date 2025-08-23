@@ -43,13 +43,18 @@ export function withUserMethods() {
               patchState(store, { user: state });
             }
           },
+          clearUser() {
+            storageService.clear();
+            patchState(store, { user: initialState.user });
+          },
           createUser(user: User): void {
-            patchState(store, {isLoading: true})
-            userApiService.createUser(user).pipe(
-              finalize((): void => patchState(store, {isLoading: false})),
-            ).subscribe((response: User): void => {
-                patchState(store, {user: response});
-                storageService.setItem(USER_KEY, response);
+            userApiService.createUser(user).subscribe((response: any): void => {
+              let user: User = {name: response.name, id: response.id,
+                  email: response.email,
+                  choerbliId: response.choerbli.id}
+
+              storageService.setItem(USER_KEY, user);
+              patchState(store, {user: user});
               }
             )
           }
