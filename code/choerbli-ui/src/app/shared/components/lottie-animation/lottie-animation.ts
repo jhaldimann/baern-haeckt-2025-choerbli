@@ -16,6 +16,8 @@ export class LottieAnimation {
     autoplay: true,
     loop: false,
   };
+  @Input() width: string = '300px';
+  @Input() height: string = '300px';
 
   animationCreated(animationItem: AnimationItem): void {
     this.animationItem = animationItem;

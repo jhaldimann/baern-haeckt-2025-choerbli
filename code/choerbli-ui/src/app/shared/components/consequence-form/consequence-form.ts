@@ -21,6 +21,7 @@ import {InputGroupAddon} from 'primeng/inputgroupaddon';
 })
 export class ConsequenceForm {
   @Input() consequences!: Consequence[];
+  @Input() type: ConsequenceType = ConsequenceType.REWARD;
   @Input() title!: string;
   readonly choerbliStore = inject(ChoerbliStore);
   description: string = '';
@@ -37,7 +38,7 @@ export class ConsequenceForm {
       description: this.description,
       id: '',
       orderOfApplication: this.consequences.length + 1,
-      type: ConsequenceType.REWARD
+      type: this.type
     });
     this.description = '';
   }

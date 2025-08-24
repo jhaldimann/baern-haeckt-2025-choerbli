@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {FloatLabel} from "primeng/floatlabel";
 import {InputText} from "primeng/inputtext";
 import {ReactiveFormsModule} from "@angular/forms";
-import {Consequence} from '../../models/consequence.model';
+import {Consequence, ConsequenceType} from '../../models/consequence.model';
 import {ConsequenceForm} from '../consequence-form/consequence-form';
 
 @Component({
@@ -18,4 +18,5 @@ export class ConsequenceStep {
   @Input() rewards!: Consequence[];
   @Input() punishments!: Consequence[];
 
+  protected readonly ConsequenceType = ConsequenceType;
 }

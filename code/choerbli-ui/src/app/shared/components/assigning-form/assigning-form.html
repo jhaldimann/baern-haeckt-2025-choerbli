@@ -8,11 +8,10 @@
             <p-accordion-header>{{ category }}</p-accordion-header>
             <p-accordion-content>
               @for (item of getAllItemsByCategory(category); track item.id) {
-
                 <div class="m-2">
-                  <div class="flex items-center">
-                    <p-checkbox (click)="checkItem(item)" [binary]="true" [ngModel]="!!item.user" [disabled]="!!item.user"/>
-                    <label class="mx-2"> {{ item.itemDescription.name }} </label>
+                  <div class="flex items-center cursor-pointer w-fit" (click)="checkItem(item)">
+                    <p-checkbox [binary]="true" [ngModel]="!!item.user" [disabled]="!!item.user"/>
+                    <label class="mx-2" [class.strikethrough]="!!item.user"> {{ item.itemDescription.name }} </label>
                     <p-badge [value]="item.points" />
                   </div>
                 </div>

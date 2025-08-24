@@ -3,13 +3,15 @@ import {ChoerbliStore} from '../../stores/choerbli-store';
 import {SummaryItem} from '../../models/choerbli.model';
 import {TableModule} from 'primeng/table';
 import {Card} from 'primeng/card';
+import {LottieAnimation} from '../lottie-animation/lottie-animation';
 
 
 @Component({
   selector: 'app-ranking',
   imports: [
     TableModule,
-    Card
+    Card,
+    LottieAnimation
   ],
   templateUrl: './ranking.html',
   styleUrl: './ranking.scss'
