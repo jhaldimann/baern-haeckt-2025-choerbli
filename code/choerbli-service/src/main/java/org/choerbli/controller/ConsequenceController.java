@@ -16,8 +16,6 @@ import java.util.List;
 public class ConsequenceController {
     private final ServiceFacade serviceFacade;
 
-
-
     @PostMapping("/create")
     public ResponseEntity<List<ConsequenceDto>> create(@RequestPart(name = "creationDtos") List<ConsequenceCreationDto> creationDtos) {
         final List<ConsequenceDto> consequences = this.serviceFacade.createConsequences(creationDtos);
